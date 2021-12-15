@@ -25,15 +25,13 @@ const config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'index.html',
+      template: './src/index.html',
+      favicon: './src/assets/favicon.ico',
     }),
     new CopyPlugin({
       patterns: [{ from: './src/other', to: 'public' }],
     }),
     new CleanWebpackPlugin(),
-
-    // Add your plugins here
-    // Learn more about plugins from https://webpack.js.org/configuration/plugins/
   ],
   module: {
     rules: [
@@ -58,9 +56,6 @@ const config = {
         test: /\.(?:mp3|wav|ogg|mp4)$/i,
         type: 'asset/resource',
       },
-
-      // Add your rules for custom modules here
-      // Learn more about loaders from https://webpack.js.org/loaders/
     ],
   },
   resolve: {
