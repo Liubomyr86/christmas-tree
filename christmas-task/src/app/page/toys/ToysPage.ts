@@ -1,9 +1,12 @@
 import data from '../../../data';
 import BaseElement from '../../components/BaseElement';
+import { IFilterData } from '../../utils/alias';
 import RangeFilters from './RangeFilters/RangeFilters';
 import ValueFilters from './ValueFilters/ValueFilters';
 
 class ToysPage extends BaseElement {
+  data: IFilterData;
+
   constructor() {
     super('main', ['main']);
 
@@ -18,6 +21,7 @@ class ToysPage extends BaseElement {
     const controls = this.element.querySelector('.main__controls');
     const cardsContainer = this.element.querySelector('.main__cards-container');
 
+    if (!controls) throw Error('App root element not found');
     controls.append(new ValueFilters(this.data).render());
     controls.append(new RangeFilters().element);
   }

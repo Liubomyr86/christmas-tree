@@ -3,7 +3,12 @@ import Header from './components/Header/Header';
 import ToysPage from './page/toys/ToysPage';
 
 class App {
-  constructor(rootElement) {
+  root: HTMLElement;
+  header: HTMLElement;
+  main: HTMLElement;
+  footer: HTMLElement;
+
+  constructor(rootElement: HTMLElement) {
     this.root = rootElement;
     this.header = new Header().render();
     this.main = new ToysPage().render();

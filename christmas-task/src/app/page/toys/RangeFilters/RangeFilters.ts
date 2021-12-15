@@ -2,6 +2,10 @@ import BaseElement from '../../../components/BaseElement';
 import Title from '../../../components/Title';
 
 class RangeFilters extends BaseElement {
+  title: HTMLElement;
+  countContainer: HTMLElement;
+  yearContainer: HTMLElement;
+
   constructor() {
     super('div', ['range']);
     this.title = new Title('h2', ['controls__title'], 'RANGE FILTERS').render();

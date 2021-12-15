@@ -1,8 +1,10 @@
 class BaseElement {
-  constructor(tagName, className) {
+  element: HTMLElement;
+
+  constructor(tagName: string, className: string[]) {
     this.element = document.createElement(tagName);
     this.element.classList.add(...className);
-    this.render();
+    // this.render()
   }
 
   render() {

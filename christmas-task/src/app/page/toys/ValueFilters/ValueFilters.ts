@@ -1,8 +1,17 @@
 import BaseElement from '../../../components/BaseElement';
 import Title from '../../../components/Title';
+import { IFilterData } from '../../../utils/alias';
 
 class ValueFilters extends BaseElement {
-  constructor(data) {
+  title: HTMLElement;
+  button: HTMLElement | undefined;
+  shapeContainer: HTMLElement;
+  colorContainer: HTMLElement;
+  sizeContainer: HTMLElement;
+  favoriteContainer: HTMLElement;
+  checkbox: HTMLElement;
+
+  constructor(data: IFilterData) {
     super('div', ['filters']);
     this.title = new Title(
       'h2',

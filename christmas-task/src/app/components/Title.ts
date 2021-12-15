@@ -1,7 +1,7 @@
 import BaseElement from './BaseElement';
 
 class Title extends BaseElement {
-  constructor(tagName, className, text) {
+  constructor(tagName: string, className: string[], text: string) {
     super(tagName, className);
     this.element.textContent = text;
   }
