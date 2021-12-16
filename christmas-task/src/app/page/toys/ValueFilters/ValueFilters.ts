@@ -22,7 +22,7 @@ class ValueFilters extends BaseElement {
     this.shapeContainer = new BaseElement('div', ['shape']).render(
       this.element
     );
-    console.log(this.element);
+
     new Title('h3', ['controls__subtitle'], 'Shape').render(
       this.shapeContainer
     );

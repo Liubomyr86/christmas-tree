@@ -4,6 +4,7 @@ import { IFilterData } from '../../utils/alias';
 import RangeFilters from './RangeFilters/RangeFilters';
 import ValueFilters from './ValueFilters/ValueFilters';
 import Search from './Search/Search';
+import Sorting from './Sort/Sorting';
 
 class ToysPage extends BaseElement {
   data: IFilterData;
@@ -22,10 +23,14 @@ class ToysPage extends BaseElement {
     const controls = this.element.querySelector('.main__controls');
     const cardsContainer = this.element.querySelector('.main__cards-container');
 
-    if (!controls) throw Error('App root element not found');
+    if (!controls) throw Error('Controls element not found');
     controls.append(new Search().element);
     controls.append(new ValueFilters(this.data).element);
     controls.append(new RangeFilters().element);
+    controls.append(new Sorting().element);
+    controls.append(
+      new BaseElement('button', ['reset'], 'Сброс фильтров').element
+    );
   }
 
   getToysData() {
