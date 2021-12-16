@@ -10,9 +10,9 @@ class App {
 
   constructor(rootElement: HTMLElement) {
     this.root = rootElement;
-    this.header = new Header().render();
-    this.main = new ToysPage().render();
-    this.footer = new Footer().render();
+    this.header = new Header().element;
+    this.main = new ToysPage().element;
+    this.footer = new Footer().element;
   }
 
   start() {

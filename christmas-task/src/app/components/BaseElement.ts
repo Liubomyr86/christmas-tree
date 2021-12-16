@@ -1,14 +1,14 @@
 class BaseElement {
   element: HTMLElement;
 
-  constructor(tagName: string, className: string[]) {
+  constructor(tagName: string, className: string[], text?: string) {
     this.element = document.createElement(tagName);
     this.element.classList.add(...className);
-    // this.render()
+    if (text) this.element.textContent = text;
   }
 
-  render() {
-    return this.element;
+  render(elem: HTMLElement): HTMLElement {
+    return elem.appendChild(this.element);
   }
 }
 
