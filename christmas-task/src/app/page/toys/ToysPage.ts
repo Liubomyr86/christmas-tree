@@ -5,6 +5,7 @@ import RangeFilters from './RangeFilters/RangeFilters';
 import ValueFilters from './ValueFilters/ValueFilters';
 import Search from './Search/Search';
 import Sorting from './Sort/Sorting';
+import ToyCard from './ToyCard/ToyCard';
 
 class ToysPage extends BaseElement {
   data: IFilterData;
@@ -31,6 +32,10 @@ class ToysPage extends BaseElement {
     controls.append(
       new BaseElement('button', ['reset'], 'Сброс фильтров').element
     );
+
+    data.map((item) => {
+      cardsContainer?.append(new ToyCard(item).element);
+    });
   }
 
   getToysData() {
