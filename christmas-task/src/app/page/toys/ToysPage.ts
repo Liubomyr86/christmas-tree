@@ -33,7 +33,7 @@ class ToysPage extends BaseElement {
       new BaseElement('button', ['reset'], 'Сброс фильтров').element
     );
 
-    data.map((item) => {
+    data.forEach((item) => {
       cardsContainer?.append(new ToyCard(item).element);
     });
   }

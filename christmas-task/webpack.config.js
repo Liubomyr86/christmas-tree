@@ -29,7 +29,7 @@ const config = {
       favicon: './src/assets/favicon.ico',
     }),
     new CopyPlugin({
-      patterns: [{ from: './src/other', to: 'public' }],
+      patterns: [{ from: './src/assets', to: 'public' }],
     }),
     new CleanWebpackPlugin(),
   ],

@@ -26,7 +26,7 @@ class ValueFilters extends BaseElement {
     new Title('h3', ['controls__subtitle'], 'Shape').render(
       this.shapeContainer
     );
-    data.shape.map((item) => {
+    data.shape.forEach((item) => {
       this.button = new BaseElement('button', [
         'shape__button',
         `shape__button_${item}`,
@@ -39,7 +39,7 @@ class ValueFilters extends BaseElement {
     new Title('h3', ['controls__subtitle'], 'Color').render(
       this.colorContainer
     );
-    data.color.map((item) => {
+    data.color.forEach((item) => {
       this.button = new BaseElement('button', [
         'shape__button',
         `shape__button_${item}`,
@@ -48,7 +48,7 @@ class ValueFilters extends BaseElement {
 
     this.sizeContainer = new BaseElement('div', ['size']).render(this.element);
     new Title('h3', ['controls__subtitle'], 'Size').render(this.sizeContainer);
-    data.size.map((item) => {
+    data.size.forEach((item) => {
       this.button = new BaseElement('button', [
         'size__button',
         `size__button_${item}`,

@@ -11,7 +11,7 @@ class ToyCard extends BaseElement {
       this.element
     );
     this.image = new BaseElement('img', ['toy-card__img']).render(this.element);
-    this.image.setAttribute('src', `assets/toys/${data.num}.png`);
+    this.image.setAttribute('src', `public/toys/${data.num}.png`);
     this.image.setAttribute('alt', 'toy-image');
 
     this.cardDescription = new BaseElement('div', [

@@ -11,7 +11,7 @@ class Sorting extends BaseElement {
     this.select = new BaseElement('select', ['sort__select']).render(
       this.element
     );
-    selectData.map((item) => {
+    selectData.forEach((item) => {
       this.option = new BaseElement(
         'option',
         ['select__option'],
