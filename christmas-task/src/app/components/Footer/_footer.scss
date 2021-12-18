@@ -1,0 +1,37 @@
+@import '../../../sass/abstracts/placeholders';
+.footer {
+  background-color: var(--color-background);
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+  }
+
+  &__data {
+    display: flex;
+    flex-grow: 1;
+    column-gap: 400px;
+  }
+}
+
+.github {
+  color: var(--color-text-white);
+  text-decoration: none;
+  @extend %transition;
+  &:hover {
+    color: var(--color-border);
+  }
+}
+
+.rss-logo {
+  display: inline-block;
+  width: 160px;
+  height: 60px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url('../../../assets/svg/rss_christmas.svg');
+  // background-color: var(--color-text-white);
+  // -webkit-mask-size: cover;
+  // -webkit-mask-image: url('../../../assets/svg/rss_christmas.svg');
+}

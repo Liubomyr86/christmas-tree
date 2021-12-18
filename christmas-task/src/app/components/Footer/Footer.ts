@@ -1,3 +1,4 @@
+import './_footer.scss';
 import BaseElement from '../BaseElement';
 
 class Footer extends BaseElement {
