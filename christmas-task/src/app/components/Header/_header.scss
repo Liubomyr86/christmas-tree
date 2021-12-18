@@ -1,0 +1,87 @@
+@import '../../../sass/abstracts/mixins';
+@import '../../../sass/abstracts/placeholders';
+
+.header {
+  position: relative;
+  background-color: var(--color-background);
+  z-index: 10;
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__basket {
+    width: 48px;
+    height: 60px;
+    background-image: url('../../../assets/svg/ball-2.svg');
+    background-size: 48px 60px;
+    background-position: left -8px;
+    background-repeat: no-repeat;
+    transition: 0.3s;
+    span {
+      display: inline-block;
+      min-width: 40px;
+      height: 40px;
+      margin-top: 10px;
+      margin-left: 4px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 40px;
+      font-size: 20px;
+      background-color: var(--color-border);
+    }
+  }
+}
+
+.navigation {
+  &__list {
+    display: flex;
+    align-items: center;
+  }
+
+  &__item {
+    @include font($size: 20px);
+    margin-right: 30px;
+  }
+
+  &__link {
+    position: relative;
+    padding: 20px;
+    color: var(--color-text-white);
+    text-decoration: none;
+    text-transform: uppercase;
+    @extend %transition;
+
+    &:nth-child(1) {
+      padding-left: 0;
+    }
+
+    &:hover {
+      color: var(--color-border);
+    }
+  }
+}
+
+.logo {
+  display: inline-block;
+  width: 48px;
+  height: 60px;
+  background-image: url('../../../assets/svg/tree.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.active-link {
+  color: var(--color-border);
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 15px;
+    height: 3px;
+    background-color: var(--color-border);
+  }
+}

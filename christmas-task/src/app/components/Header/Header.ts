@@ -1,3 +1,5 @@
+import './_header.scss';
+
 import BaseElement from '../BaseElement';
 
 class Header extends BaseElement {
@@ -9,10 +11,10 @@ class Header extends BaseElement {
         <nav class="header__navigation navigation">
           <ul class="navigation__list">
             <li class="navigation__item">
-              <a class="navigation__link" href="#">Main</a>
+              <a class="navigation__link logo" href="#"></a>
             </li>
             <li class="navigation__item">
-              <a class="navigation__link" href="#">Toys</a>
+              <a class="navigation__link active-link" href="#">Toys</a>
             </li>
             <li class="navigation__item">
               <a class="navigation__link" href="#">Christmas tree</a>

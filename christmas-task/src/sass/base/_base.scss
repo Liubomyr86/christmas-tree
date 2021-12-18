@@ -1,0 +1,30 @@
+@font-face {
+  font-family: 'Steppe';
+  src: url('./assets/fonts/Steppe/Steppe.ttf');
+}
+
+@font-face {
+  font-family: 'Neucha';
+  src: url('./assets/fonts/Neucha/Neucha-Regular.ttf');
+}
+
+body {
+  @extend %font-primary;
+  @include font;
+  color: var(--color-text-white);
+  background-color: var(--color-background);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @extend %font-title;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: $content-width;
+}
