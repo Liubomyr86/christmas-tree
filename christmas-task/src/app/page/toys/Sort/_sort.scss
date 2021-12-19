@@ -1,0 +1,32 @@
+@import '../../../../sass/abstracts/constants';
+.sort {
+  &__select {
+    appearance: none;
+    border: 0;
+    outline: 0;
+    font: inherit;
+    width: 360px;
+    height: 40px;
+    padding: 5px 25px;
+    padding-right: 25px;
+    margin: 10px 0;
+    margin-bottom: 125px;
+    background-color: rgba(31, 112, 127, 0.3);
+    background-image: url('../../../../assets/svg/arrow-down.svg');
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: 320px center;
+    backdrop-filter: blur(6px);
+    border-radius: 20px;
+    border: 1px solid var(--color-border);
+    font-size: 20px;
+    line-height: 28px;
+    color: var(--color-white);
+    cursor: pointer;
+  }
+
+  &__option {
+    color: inherit;
+    background-color: var(--color-option);
+  }
+}

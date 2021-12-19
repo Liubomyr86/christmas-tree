@@ -1,3 +1,5 @@
+import './_range-filters.scss';
+
 import BaseElement from '../../../components/BaseElement';
 import Title from '../../../components/Title';
 
@@ -26,7 +28,7 @@ class RangeFilters extends BaseElement {
     new BaseElement('output', ['range__output'], '1').render(
       this.countRangeContainer
     );
-    new BaseElement('div', ['range__slider']).render(this.countRangeContainer);
+    new BaseElement('div', ['count__slider']).render(this.countRangeContainer);
     new BaseElement('output', ['range__output'], '12').render(
       this.countRangeContainer
     );
@@ -36,12 +38,12 @@ class RangeFilters extends BaseElement {
       this.yearContainer
     );
     this.yearRangeContainer = new BaseElement('div', [
-      'count__range-container',
+      'year__range-container',
     ]).render(this.yearContainer);
     new BaseElement('output', ['range__output'], '1940').render(
       this.yearRangeContainer
     );
-    new BaseElement('div', ['range__slider']).render(this.yearRangeContainer);
+    new BaseElement('div', ['year__slider']).render(this.yearRangeContainer);
     new BaseElement('output', ['range__output'], '2020').render(
       this.yearRangeContainer
     );

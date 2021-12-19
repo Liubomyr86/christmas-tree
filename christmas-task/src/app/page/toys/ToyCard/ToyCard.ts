@@ -1,3 +1,5 @@
+import './_toy-card.scss';
+
 import BaseElement from '../../../components/BaseElement';
 import { IToyCardData } from '../../../utils/alias';
 
@@ -19,12 +21,12 @@ class ToyCard extends BaseElement {
     ]).render(this.element);
 
     this.cardDescription.innerHTML = `
-      <p class="amount">Amount: <span>${data.amount}</span></p>
-      <p class="year">Year: <span>${data.year}</span></p>
-      <p class="shape">Shape: <span>${data.shape}</span></p>
-      <p class="color">Color: <span>${data.color}</span></p>
-      <p class="size">Size: <span>${data.size}</span></p>
-      <p class="favorite">Favorite: <span>${
+      <p class="toy-card__amount">Amount: <span>${data.amount}</span></p>
+      <p class="toy-card__year">Year: <span>${data.year}</span></p>
+      <p class="toy-card__shape">Shape: <span>${data.shape}</span></p>
+      <p class="toy-card__color">Color: <span>${data.color}</span></p>
+      <p class="toy-card__size">Size: <span>${data.size}</span></p>
+      <p class="toy-card__favorite">Favorite: <span>${
         data.favorite ? 'Yes' : 'No'
       }</span></p>
     `;

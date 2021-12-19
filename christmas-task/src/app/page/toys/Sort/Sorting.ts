@@ -1,3 +1,5 @@
+import './_sort.scss';
+
 import BaseElement from '../../../components/BaseElement';
 import Title from '../../../components/Title';
 import { selectData } from '../../../utils/selectData';
@@ -14,7 +16,7 @@ class Sorting extends BaseElement {
     selectData.forEach((item) => {
       this.option = new BaseElement(
         'option',
-        ['select__option'],
+        ['sort__option'],
         item.name
       ).render(this.select);
       this.option.setAttribute('value', item.value);

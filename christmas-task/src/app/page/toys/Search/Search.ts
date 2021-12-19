@@ -1,3 +1,4 @@
+import './_search.scss';
 import BaseElement from '../../../components/BaseElement';
 
 class Search extends BaseElement {

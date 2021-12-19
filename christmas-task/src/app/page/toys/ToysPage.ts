@@ -1,3 +1,5 @@
+import './_toys-page.scss';
+
 import data from '../../utils/data';
 import BaseElement from '../../components/BaseElement';
 import { IFilterData } from '../../utils/alias';
@@ -15,14 +17,16 @@ class ToysPage extends BaseElement {
 
     this.data = this.getToysData();
     this.element.innerHTML = `
-      <div class="main__container container">
-        <div class="main__controls controls"></div>
-        <div class="main__cards-container"></div>
+      <div class="blur">
+        <div class="toys container">
+          <div class="toys__controls controls"></div>
+          <div class="toys__cards-container"></div>
+        </div>
       </div>
     `;
 
-    const controls = this.element.querySelector('.main__controls');
-    const cardsContainer = this.element.querySelector('.main__cards-container');
+    const controls = this.element.querySelector('.toys__controls');
+    const cardsContainer = this.element.querySelector('.toys__cards-container');
 
     if (!controls) throw Error('Controls element not found');
     controls.append(new Search().element);

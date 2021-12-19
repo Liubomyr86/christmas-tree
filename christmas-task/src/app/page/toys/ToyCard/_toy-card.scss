@@ -1,0 +1,45 @@
+@import '../../../../sass/abstracts/constants';
+
+.toy-card {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 280px;
+  height: 280px;
+  padding: 10px 0 0 10px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-background-container);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+
+  &__title {
+    width: 100%;
+    font-size: 20px;
+    font-stretch: condensed;
+    padding-left: 10px;
+    text-align: center;
+  }
+
+  &__img {
+    width: 90px;
+    height: 112px;
+    object-fit: contain;
+    pointer-events: none;
+  }
+  &__description {
+    width: 155px;
+    pointer-events: none;
+    line-height: 1;
+    user-select: none;
+  }
+
+  &__amount,
+  &__year,
+  &__shape,
+  &__color,
+  &__size,
+  &__favorite {
+    margin: 18px 0;
+  }
+}

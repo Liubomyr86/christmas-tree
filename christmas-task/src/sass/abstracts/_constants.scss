@@ -1,10 +1,18 @@
 :root {
   --color-background: #121c1e;
-  --color-text-white: #ffffff;
+  --color-text: #ffffff;
   --color-background-container: rgba(31, 112, 127, 0.3);
   --color-border: #278d9f;
   --color-ribbon: #24c5db;
   --color-ribbon-active: #cbb77a;
+  --color-white: #ffffff;
+  --color-yellow: #fdd700;
+  --color-red: #fd0000;
+  --color-blue: #2199eb;
+  --color-green: #08aa05;
+  --color-option: #183e42;
+  --color-filter-button-active: #cbb77a;
+  --color-filter-button-hover: #d8dbaa;
 }
 
 $content-width: 1600px;
