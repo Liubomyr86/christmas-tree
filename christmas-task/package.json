@@ -38,6 +38,7 @@
     "webpack-dev-server": "^4.6.0"
   },
   "dependencies": {
-    "clean-webpack-plugin": "^4.0.0"
+    "clean-webpack-plugin": "^4.0.0",
+    "nouislider": "^15.5.0"
   }
 }

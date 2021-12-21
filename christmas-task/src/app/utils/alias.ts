@@ -6,11 +6,15 @@ export interface IFilterData {
 
 export interface IToyCardData {
   num: string;
+  nameRu: string;
   name: string;
   amount: string;
   year: string;
+  shapeRu: string;
   shape: string;
+  colorRu: string;
   color: string;
+  sizeRu: string;
   size: string;
   favorite: boolean;
 }

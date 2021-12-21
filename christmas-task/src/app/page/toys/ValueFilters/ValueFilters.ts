@@ -2,9 +2,11 @@ import './_value-filters.scss';
 
 import BaseElement from '../../../components/BaseElement';
 import Title from '../../../components/Title';
-import { IFilterData } from '../../../utils/alias';
+import { IFilterData, IToyCardData } from '../../../utils/alias';
+import data from '../../../utils/data';
 
 class ValueFilters extends BaseElement {
+  data: IFilterData;
   title: HTMLElement;
   button: HTMLElement | undefined;
   shapeContainer: HTMLElement;
@@ -14,9 +16,13 @@ class ValueFilters extends BaseElement {
   checkbox: HTMLElement;
   checkboxContainer: HTMLElement;
   lable: HTMLElement;
+  filterData: (IToyCardData | undefined)[];
 
-  constructor(data: IFilterData) {
+  constructor(filterData: (IToyCardData | undefined)[]) {
     super('div', ['filters']);
+
+    this.filterData = filterData;
+    this.data = this.getToysData();
     this.title = new Title(
       'h2',
       ['controls__title'],
@@ -30,7 +36,7 @@ class ValueFilters extends BaseElement {
     new Title('h3', ['controls__subtitle'], 'Shape:').render(
       this.shapeContainer
     );
-    data.shape.forEach((item) => {
+    this.data.shape.forEach((item) => {
       this.button = new BaseElement('button', [
         'shape__button',
         `shape__button_${item}`,
@@ -43,7 +49,7 @@ class ValueFilters extends BaseElement {
     new Title('h3', ['controls__subtitle'], 'Color:').render(
       this.colorContainer
     );
-    data.color.forEach((item) => {
+    this.data.color.forEach((item) => {
       this.button = new BaseElement('button', [
         'color__button',
         `color__button_${item}`,
@@ -52,7 +58,7 @@ class ValueFilters extends BaseElement {
 
     this.sizeContainer = new BaseElement('div', ['size']).render(this.element);
     new Title('h3', ['controls__subtitle'], 'Size:').render(this.sizeContainer);
-    data.size.forEach((item) => {
+    this.data.size.forEach((item) => {
       this.button = new BaseElement('button', [
         'size__button',
         `size__button_${item}`,
@@ -78,6 +84,16 @@ class ValueFilters extends BaseElement {
       this.checkboxContainer
     );
     this.lable.setAttribute('for', 'checkbox');
+  }
+
+  getToysData() {
+    const filterCategories = {
+      shape: [...new Set(data.map((item) => item.shape))],
+      color: [...new Set(data.map((item) => item.color))],
+      size: [...new Set(data.map((item) => item.size))],
+    };
+
+    return filterCategories;
   }
 }
 
