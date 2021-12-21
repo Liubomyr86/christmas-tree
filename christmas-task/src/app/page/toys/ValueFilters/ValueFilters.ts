@@ -41,6 +41,7 @@ class ValueFilters extends BaseElement {
         'shape__button',
         `shape__button_${item}`,
       ]).render(this.shapeContainer);
+      this.button.dataset.shape = item;
     });
 
     this.colorContainer = new BaseElement('div', ['color']).render(
@@ -54,6 +55,7 @@ class ValueFilters extends BaseElement {
         'color__button',
         `color__button_${item}`,
       ]).render(this.colorContainer);
+      this.button.dataset.color = item;
     });
 
     this.sizeContainer = new BaseElement('div', ['size']).render(this.element);
@@ -63,6 +65,7 @@ class ValueFilters extends BaseElement {
         'size__button',
         `size__button_${item}`,
       ]).render(this.sizeContainer);
+      this.button.dataset.size = item;
     });
 
     this.favoriteContainer = new BaseElement('div', ['favorite']).render(

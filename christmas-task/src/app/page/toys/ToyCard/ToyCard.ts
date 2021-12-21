@@ -7,7 +7,8 @@ class ToyCard extends BaseElement {
   title: HTMLElement;
   image: HTMLElement;
   cardDescription: HTMLElement;
-  constructor(data: IToyCardData) {
+
+  constructor(public data: IToyCardData) {
     super('div', ['toy-card']);
     this.title = new BaseElement('h2', ['toy-card__title'], data.name).render(
       this.element

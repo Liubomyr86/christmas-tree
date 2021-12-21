@@ -12,6 +12,9 @@ import { IToyCardData } from '../../utils/alias';
 class ToysPage extends BaseElement {
   filterData: (IToyCardData | undefined)[];
 
+  private cardsContainer: HTMLElement;
+  private toyCards: ToyCard[] = [];
+
   constructor() {
     super('main', ['main']);
 
@@ -26,10 +29,10 @@ class ToysPage extends BaseElement {
     `;
 
     const controls = this.element.querySelector('.toys__controls');
-    const cardsContainer = this.element.querySelector('.toys__cards-container');
+    this.cardsContainer = this.element.querySelector('.toys__cards-container')!;
 
     if (!controls) throw Error('Controls element not found');
-    controls.append(new Search(this.filterData, this.setData).element);
+    controls.append(new Search(this.setSearchFilter.bind(this)).element);
     controls.append(new ValueFilters(this.filterData).element);
     controls.append(new RangeFilters().element);
     controls.append(new Sorting().element);
@@ -37,9 +40,8 @@ class ToysPage extends BaseElement {
       new BaseElement('button', ['reset'], 'Reset filters').element
     );
 
-    this.filterData.forEach((item) => {
-      if (item) return cardsContainer?.append(new ToyCard(item).element);
-    });
+    this.toyCards = data.map((item) => new ToyCard(item));
+    this.setSearchFilter('');
   }
 
   getData() {
@@ -48,9 +50,14 @@ class ToysPage extends BaseElement {
     return toysData;
   }
 
-  setData(data: (IToyCardData | undefined)[]) {
-    this.filterData = data;
-    return this.filterData;
+  setSearchFilter(name: string) {
+    console.log(this);
+    this.cardsContainer.innerHTML = '';
+    this.toyCards
+      .filter((item) => item.data.name.toLowerCase().includes(name))
+      .forEach((item) => {
+        this.cardsContainer.append(item.element);
+      });
   }
 }
 
