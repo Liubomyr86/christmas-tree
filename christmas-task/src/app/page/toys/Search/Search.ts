@@ -8,6 +8,7 @@ class Search extends BaseElement {
     super('input', ['search']);
     this.element.setAttribute('type', 'search');
     this.element.setAttribute('autocomplete', 'off');
+    this.element.setAttribute('placeholder', 'Search toys by name...');
     this.element.id = 'search';
     this.setData = setData;
     this.searchCard();

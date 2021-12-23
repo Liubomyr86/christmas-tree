@@ -45,6 +45,10 @@ const config = {
         use: [stylesHandler, 'css-loader', 'postcss-loader', 'sass-loader'],
       },
       {
+        test: /\.css$/i,
+        use: [stylesHandler, 'css-loader', 'postcss-loader'],
+      },
+      {
         test: /\.(?:ico|gif|png|jpg|jpeg|svg|webp)$/i,
         type: 'asset/resource',
       },

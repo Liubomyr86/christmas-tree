@@ -9,7 +9,7 @@
   &__slider {
     display: inline-block;
     height: 6px;
-    width: 270px;
+    width: 210px;
   }
 }
 
@@ -19,10 +19,44 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    min-width: 80px;
-    height: 40px;
+    min-width: 60px;
+    height: 30px;
     backdrop-filter: blur(6px);
     border-radius: 20px;
     border: 1px solid var(--color-border);
   }
+}
+
+//noUiSlider style
+.noUi-connect {
+  background-color: var(--color-border);
+}
+
+.noUi-target {
+  border: 0;
+}
+
+.noUi-horizontal .noUi-handle {
+  width: 22px;
+  height: 22px;
+  right: -11px;
+  top: -8px;
+  border-radius: 50%;
+  cursor: ew-resize;
+}
+
+.noUi-handle:before,
+.noUi-handle:after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 11px;
+  width: 1px;
+  background: #e8e7e6;
+  left: 9px;
+  top: 4px;
+}
+
+.noUi-handle:after {
+  left: 11px;
 }

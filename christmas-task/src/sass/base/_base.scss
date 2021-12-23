@@ -41,8 +41,9 @@ h6 {
 .controls {
   &__title {
     text-transform: uppercase;
-    height: 60px;
+    height: 40px;
     @include font($size: 20px, $height: 60px);
+    text-align: center;
   }
 
   &__subtitle {
