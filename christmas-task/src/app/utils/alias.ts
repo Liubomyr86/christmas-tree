@@ -18,3 +18,10 @@ export interface IToyCardData {
   size: string;
   favorite: boolean;
 }
+
+export interface IFilterKeys {
+  shape?: string;
+  color?: string;
+  size?: string;
+  selected: boolean;
+}

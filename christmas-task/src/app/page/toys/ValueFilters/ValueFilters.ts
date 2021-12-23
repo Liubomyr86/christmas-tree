@@ -16,12 +16,17 @@ class ValueFilters extends BaseElement {
   checkbox: HTMLElement;
   checkboxContainer: HTMLElement;
   lable: HTMLElement;
-  filterData: (IToyCardData | undefined)[];
+  filter: (category: string, name: string, flag: boolean) => void;
 
-  constructor(filterData: (IToyCardData | undefined)[]) {
+  constructor(
+    pushDatasetValueFilters: (
+      category: string,
+      name: string,
+      flag: boolean
+    ) => void
+  ) {
     super('div', ['filters']);
-
-    this.filterData = filterData;
+    this.filter = pushDatasetValueFilters;
     this.data = this.getToysData();
     this.title = new Title(
       'h2',
@@ -41,7 +46,7 @@ class ValueFilters extends BaseElement {
         'shape__button',
         `shape__button_${item}`,
       ]).render(this.shapeContainer);
-      this.button.dataset.shape = item;
+      this.button.dataset.filter = `shape-${item}`;
     });
 
     this.colorContainer = new BaseElement('div', ['color']).render(
@@ -55,7 +60,7 @@ class ValueFilters extends BaseElement {
         'color__button',
         `color__button_${item}`,
       ]).render(this.colorContainer);
-      this.button.dataset.color = item;
+      this.button.dataset.filter = `color-${item}`;
     });
 
     this.sizeContainer = new BaseElement('div', ['size']).render(this.element);
@@ -65,7 +70,7 @@ class ValueFilters extends BaseElement {
         'size__button',
         `size__button_${item}`,
       ]).render(this.sizeContainer);
-      this.button.dataset.size = item;
+      this.button.dataset.filter = `size-${item}`;
     });
 
     this.favoriteContainer = new BaseElement('div', ['favorite']).render(
@@ -87,6 +92,7 @@ class ValueFilters extends BaseElement {
       this.checkboxContainer
     );
     this.lable.setAttribute('for', 'checkbox');
+    this.selectFilter();
   }
 
   getToysData() {
@@ -97,6 +103,29 @@ class ValueFilters extends BaseElement {
     };
 
     return filterCategories;
+  }
+
+  selectFilter() {
+    this.element.addEventListener('click', (event) => {
+      // console.log(this.data);
+      const target = <HTMLElement>event.target;
+
+      if (target.tagName !== 'BUTTON') return false;
+
+      const buttonElement = target.dataset['filter'];
+      const [filterCategory, filterName] = buttonElement!.split('-');
+
+      if (target.classList.contains(`${filterCategory}__button_active`)) {
+        this.filter(filterCategory, filterName, false);
+
+        target.classList.remove(`${filterCategory}__button_active`);
+      } else {
+        this.filter(filterCategory, filterName, true);
+        target.classList.add(`${filterCategory}__button_active`);
+      }
+
+      // console.log(filterCategory, filterName);
+    });
   }
 }
 
