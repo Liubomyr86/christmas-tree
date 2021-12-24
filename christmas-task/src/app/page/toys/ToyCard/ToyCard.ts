@@ -2,14 +2,31 @@ import './_toy-card.scss';
 
 import BaseElement from '../../../components/BaseElement';
 import { IToyCardData } from '../../../utils/alias';
+import App from '../../../app';
 
 class ToyCard extends BaseElement {
   title: HTMLElement;
   image: HTMLElement;
   cardDescription: HTMLElement;
+  ribbon: HTMLElement;
+  favoriteArrPush: (elem: IToyCardData) => void;
+  favoritArrPop: (elem: string) => void;
+  count: number;
 
-  constructor(public data: IToyCardData) {
+  constructor(
+    public data: IToyCardData,
+    arrPush: (elem: IToyCardData) => void,
+    arrPop: (elem: string) => void,
+    count: number
+  ) {
     super('div', ['toy-card']);
+
+    this.count = count;
+
+    this.favoriteArrPush = arrPush;
+    this.favoritArrPop = arrPop;
+
+    this.element.dataset.num = data.num;
     this.title = new BaseElement('h2', ['toy-card__title'], data.name).render(
       this.element
     );
@@ -31,6 +48,28 @@ class ToyCard extends BaseElement {
         data.favorite ? 'Yes' : 'No'
       }</span></p>
     `;
+    this.ribbon = new BaseElement('span', ['ribbon']).render(this.element);
+    this.addToFavorite();
+  }
+
+  addToFavorite() {
+    this.element.addEventListener('click', () => {
+      if (this.ribbon.classList.contains('ribbon_checked')) {
+        this.count -= 1;
+        this.ribbon.classList.remove('ribbon_checked');
+        this.favoritArrPop(this.element.dataset.num!);
+      } else {
+        if (this.count >= 20) {
+          alert('Извините, все слоты заполнены');
+        } else {
+          this.count += 1;
+          console.log(this.count);
+          this.ribbon.classList.add('ribbon_checked');
+          this.favoriteArrPush(this.data);
+          // console.log(this.favoriteArr);
+        }
+      }
+    });
   }
 }
 

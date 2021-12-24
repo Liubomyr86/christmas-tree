@@ -18,7 +18,11 @@ class ToysPage extends BaseElement {
   private filterKeys: IFilterKeys[] = [];
   private keysSelectedFilter: string[] = [];
 
-  constructor() {
+  constructor(
+    arrPush: (elem: IToyCardData) => void,
+    arrPop: (elem: string) => void,
+    count: number
+  ) {
     super('main', ['main']);
 
     this.filterData = this.getData();
@@ -60,7 +64,9 @@ class ToysPage extends BaseElement {
       { size: 'average', selected: false },
       { size: 'small', selected: false },
     ];
-    this.toyCards = data.map((item) => new ToyCard(item));
+    this.toyCards = data.map(
+      (item) => new ToyCard(item, arrPush, arrPop, count)
+    );
     this.setSearchFilter('');
     this.setValueFilters('', '', false);
   }
