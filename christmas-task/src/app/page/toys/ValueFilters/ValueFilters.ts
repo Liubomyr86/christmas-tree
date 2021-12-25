@@ -18,6 +18,12 @@ class ValueFilters extends BaseElement {
   lable: HTMLElement;
   filter: (category: string, name: string, flag: boolean) => void;
 
+  private selectedShapes = new Set<string>();
+
+  checkShapeIsSelected(shape: string): boolean {
+    return this.selectedShapes.size === 0 || this.selectedShapes.has(shape);
+  }
+
   constructor(
     pushDatasetValueFilters: (
       category: string,

@@ -1,9 +1,9 @@
 class BaseElement {
   element: HTMLElement;
 
-  constructor(tagName: string, className: string[], text?: string) {
+  constructor(tagName: string, className?: string[], text?: string) {
     this.element = document.createElement(tagName);
-    this.element.classList.add(...className);
+    if (className) this.element.classList.add(...className);
     if (text) this.element.textContent = text;
   }
 

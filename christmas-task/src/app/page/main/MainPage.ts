@@ -18,7 +18,7 @@ class MainPage extends BaseElement {
           "Dress up the tree"
         </p>
       </div>
-      <a class="first-page__button" href="#">Start</a>
+      <a class="first-page__button" href="#toys-page">Start</a>
     </div>
     `;
   }

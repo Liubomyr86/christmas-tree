@@ -12,17 +12,20 @@ import { IFilterKeys, IToyCardData } from '../../utils/alias';
 class ToysPage extends BaseElement {
   filterData: (IToyCardData | undefined)[];
 
+  private controls: HTMLElement;
   private cardsContainer: HTMLElement;
   private toyCards: ToyCard[] = [];
   private curentFilters: ToyCard[] = [];
   private filterKeys: IFilterKeys[] = [];
   private keysSelectedFilter: string[] = [];
 
-  constructor(
-    arrPush: (elem: IToyCardData) => void,
-    arrPop: (elem: string) => void,
-    count: number
-  ) {
+  private valueFilters: HTMLElement;
+  private searchElement: HTMLElement;
+  private rangeFilters: HTMLElement;
+  private sorting: HTMLElement;
+  private resetButton: HTMLElement;
+
+  constructor() {
     super('main', ['main']);
 
     this.filterData = this.getData();
@@ -35,17 +38,23 @@ class ToysPage extends BaseElement {
       </div>
     `;
 
-    const controls = this.element.querySelector('.toys__controls');
+    this.controls = this.element.querySelector('.toys__controls')!;
     this.cardsContainer = this.element.querySelector('.toys__cards-container')!;
 
-    if (!controls) throw Error('Controls element not found');
-    controls.append(new Search(this.setSearchFilter.bind(this)).element);
-    controls.append(new ValueFilters(this.setValueFilters.bind(this)).element);
-    controls.append(new RangeFilters().element);
-    controls.append(new Sorting().element);
-    controls.append(
-      new BaseElement('button', ['reset'], 'Reset filters').element
+    this.searchElement = new Search(this.setSearchFilter.bind(this)).render(
+      this.controls
     );
+    this.valueFilters = new ValueFilters(
+      this.setValueFilters.bind(this)
+    ).render(this.controls);
+    this.rangeFilters = new RangeFilters().render(this.controls);
+    this.sorting = new Sorting().render(this.controls);
+
+    this.resetButton = new BaseElement(
+      'button',
+      ['reset'],
+      'Reset filters'
+    ).render(this.controls);
 
     this.filterKeys = [
       { shape: 'ball', selected: false },
@@ -64,9 +73,7 @@ class ToysPage extends BaseElement {
       { size: 'average', selected: false },
       { size: 'small', selected: false },
     ];
-    this.toyCards = data.map(
-      (item) => new ToyCard(item, arrPush, arrPop, count)
-    );
+    this.toyCards = data.map((item) => new ToyCard(item));
     this.setSearchFilter('');
     this.setValueFilters('', '', false);
   }
@@ -157,7 +164,7 @@ class ToysPage extends BaseElement {
   }
 
   setValueFilters(category: string, name: string, flag: boolean) {
-    console.log(category, name, flag);
+    // console.log(category, name, flag);
 
     this.cardsContainer.innerHTML = '';
     switch (flag) {
@@ -169,12 +176,11 @@ class ToysPage extends BaseElement {
         } else {
           this.pushData(category, name, flag);
           this.curentFilters = this.toyCards.filter((item) => {
-            if (
-              this.keysSelectedFilter.includes(item.data.shape) ||
-              this.keysSelectedFilter.includes(item.data.color) ||
+            return (
+              // this.valueFilters.checkShapeIsSelected(item.data.shape) &&
+              this.keysSelectedFilter.includes(item.data.color) &&
               this.keysSelectedFilter.includes(item.data.size)
-            )
-              return item;
+            );
           });
           this.curentFilters.forEach((item) =>
             this.cardsContainer.append(item.element)
@@ -183,7 +189,7 @@ class ToysPage extends BaseElement {
         break;
       case false:
         this.popData(category, name, flag);
-        console.log(this.curentFilters);
+        // console.log(this.curentFilters);
         if (this.keysSelectedFilter.length === 0) {
           this.toyCards.forEach((item) => {
             this.cardsContainer.append(item.element);
