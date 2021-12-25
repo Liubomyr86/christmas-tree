@@ -1,5 +1,6 @@
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
+import MainPage from './page/main/MainPage';
 import ToysPage from './page/toys/ToysPage';
 import { IToyCardData } from './utils/alias';
 
@@ -15,11 +16,13 @@ class App {
   constructor(rootElement: HTMLElement) {
     this.root = rootElement;
     this.header = new Header().element;
-    this.main = new ToysPage(
-      this.arrayPush.bind(this),
-      this.arrayPop.bind(this),
-      this.count
-    ).element;
+    // this.main = new ToysPage(
+    //   this.arrayPush.bind(this),
+    //   this.arrayPop.bind(this),
+    //   this.count
+    // ).element;
+    this.main = new MainPage().element;
+
     this.footer = new Footer().element;
     this.arrayPush();
     this.arrayPop();
@@ -33,8 +36,8 @@ class App {
 
   arrayPush(item?: IToyCardData) {
     if (item) this.favorite.push(item);
-
-    console.log(this.favorite);
+    this.count++;
+    // console.log(this.favorite.length);
     console.log(this.count);
   }
 
@@ -47,7 +50,11 @@ class App {
         ++i;
       }
     }
-    console.log(this.favorite);
+    this.count--;
+    // console.log(this.favorite.length);
+    console.log(this.count);
+
+    // console.log(this.favorite);
   }
 }
 export default App;
