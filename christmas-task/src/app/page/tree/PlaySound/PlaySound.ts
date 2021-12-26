@@ -17,10 +17,12 @@ class PlaySound extends BaseElement {
       if (!this.isPlay) {
         this.audio.play();
         this.isPlay = true;
+        this.element.classList.toggle('play-sound_active');
       } else {
         this.audio.pause();
         this.audio.currentTime = 0;
         this.isPlay = false;
+        this.element.classList.toggle('play-sound_active');
       }
     });
   }

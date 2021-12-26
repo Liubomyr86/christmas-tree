@@ -1,6 +1,20 @@
+@import '../../../../sass/abstracts/placeholders';
 .play-sound {
   display: inline-block;
   width: 40px;
   height: 40px;
-  background-color: yellowgreen;
+  background-color: var(--color-text);
+  -webkit-mask-size: cover;
+  -webkit-mask-image: url('../../../../assets/svg/mute.svg');
+  cursor: pointer;
+  @extend %transition;
+
+  &:hover {
+    background-color: var(--color-filter-button-hover);
+  }
+
+  &_active {
+    background-color: var(--color-filter-button-active);
+    -webkit-mask-image: url('../../../../assets/svg/audio.svg');
+  }
 }
