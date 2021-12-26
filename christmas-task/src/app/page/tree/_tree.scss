@@ -1,0 +1,14 @@
+.tree {
+  padding-top: 20px;
+  &__settings {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+  }
+
+  &__audio-snowflaks {
+    display: flex;
+    align-items: center;
+    column-gap: 40px;
+  }
+}

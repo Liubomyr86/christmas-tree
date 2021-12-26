@@ -1,9 +1,14 @@
+import './_tree.scss';
+
 import BaseElement from '../../components/BaseElement';
 import PlaySound from './PlaySound/PlaySound';
+import Snowflaks from './Snowflaks/Snowflaks';
 
 class TreePage extends BaseElement {
   audioSnowflaks: HTMLElement;
   playSound: HTMLElement;
+  snowflaks: HTMLElement;
+
   constructor() {
     super('main', ['main']);
     this.element.innerHTML = `
@@ -23,6 +28,7 @@ class TreePage extends BaseElement {
     this.audioSnowflaks = this.element.querySelector('.tree__audio-snowflaks')!;
 
     this.playSound = new PlaySound().render(this.audioSnowflaks);
+    this.snowflaks = new Snowflaks().render(this.audioSnowflaks);
   }
 }
 
