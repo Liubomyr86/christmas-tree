@@ -5,6 +5,8 @@ import PlaySound from './PlaySound/PlaySound';
 import Snowflaks from './Snowflaks/Snowflaks';
 import { treeData } from '../../utils/treeData';
 import ChooseTree from './ChooseTree/ChooseTree';
+import { backgroundData } from '../../utils/backgroundData';
+import ChooseBackground from './ChooseBackground/ChooseBackground';
 
 class TreePage extends BaseElement {
   audioSnowflaks: HTMLElement;
@@ -46,6 +48,9 @@ class TreePage extends BaseElement {
     this.playSound = new PlaySound().render(this.audioSnowflaks);
     this.snowflaks = new Snowflaks().render(this.audioSnowflaks);
     treeData.forEach((item) => new ChooseTree(item).render(this.chooseTree));
+    backgroundData.forEach((item) =>
+      new ChooseBackground(item).render(this.chooseBackground)
+    );
   }
 }
 
