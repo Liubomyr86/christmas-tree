@@ -21,6 +21,10 @@ class State {
   getArrayLength() {
     return this.favorite.length;
   }
+
+  getArrayItems(array: IToyCardData[]) {
+    return (array = this.favorite.slice(0));
+  }
 }
 
 export const state = new State();

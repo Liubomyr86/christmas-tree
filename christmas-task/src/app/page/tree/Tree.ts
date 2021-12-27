@@ -10,6 +10,10 @@ import ChooseBackground from './ChooseBackground/ChooseBackground';
 import { garlandData } from '../../utils/garlandData';
 import ChooseGarland from './ChoseGarland/ChooseGarland';
 import GarlandToggle from './GarlandToggle/GarlandToggle';
+import { IToyCardData } from '../../utils/alias';
+import { state } from '../../utils/global';
+import data from '../../utils/data';
+import FavoriteToy from './TreeToy/FavoriteToy';
 
 class TreePage extends BaseElement {
   audioSnowflaks: HTMLElement;
@@ -20,9 +24,13 @@ class TreePage extends BaseElement {
   chooseGarland: HTMLElement;
   garlandButtonsContainer: any;
   toggleGarland: HTMLElement;
+  treeToysContainer: HTMLElement;
+  favotiteToysData: IToyCardData[];
 
   constructor() {
     super('main', ['main']);
+    this.favotiteToysData = [];
+    this.getFavoriteToy();
     this.element.innerHTML = `
       <div class="blur">
         <div class="tree container">
@@ -59,6 +67,7 @@ class TreePage extends BaseElement {
     this.garlandButtonsContainer = this.element.querySelector(
       '.tree__garland-buttons'
     )!;
+    this.treeToysContainer = this.element.querySelector('.tree__toys')!;
 
     this.playSound = new PlaySound().render(this.audioSnowflaks);
     this.snowflaks = new Snowflaks().render(this.audioSnowflaks);
@@ -70,6 +79,17 @@ class TreePage extends BaseElement {
       new ChooseGarland(item).render(this.garlandButtonsContainer)
     );
     this.toggleGarland = new GarlandToggle().render(this.chooseGarland);
+    this.favotiteToysData.forEach((item) => {
+      new FavoriteToy(item).render(this.treeToysContainer);
+    });
+  }
+
+  getFavoriteToy() {
+    if (state.getArrayLength() <= 0) {
+      return (this.favotiteToysData = data.slice(0, 20));
+    } else {
+      return state.getArrayItems(this.favotiteToysData);
+    }
   }
 }
 
