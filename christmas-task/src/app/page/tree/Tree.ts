@@ -7,6 +7,9 @@ import { treeData } from '../../utils/treeData';
 import ChooseTree from './ChooseTree/ChooseTree';
 import { backgroundData } from '../../utils/backgroundData';
 import ChooseBackground from './ChooseBackground/ChooseBackground';
+import { garlandData } from '../../utils/garlandData';
+import ChooseGarland from './ChoseGarland/ChooseGarland';
+import GarlandToggle from './GarlandToggle/GarlandToggle';
 
 class TreePage extends BaseElement {
   audioSnowflaks: HTMLElement;
@@ -14,6 +17,9 @@ class TreePage extends BaseElement {
   snowflaks: HTMLElement;
   chooseTree: HTMLElement;
   chooseBackground: HTMLElement;
+  chooseGarland: HTMLElement;
+  garlandButtonsContainer: any;
+  toggleGarland: HTMLElement;
 
   constructor() {
     super('main', ['main']);
@@ -32,6 +38,9 @@ class TreePage extends BaseElement {
             </div>
             <div class="tree__choose-garland">
               <h2 class="tree__title">Garland</h2>
+              <div class="tree__garland-container">
+                <div class="tree__garland-buttons"></div>
+              </div>
             </div>
           </div>
           <div class="tree__container"></div>
@@ -44,6 +53,12 @@ class TreePage extends BaseElement {
     this.chooseBackground = this.element.querySelector(
       '.tree__items-bg-container'
     )!;
+    this.chooseGarland = this.element.querySelector(
+      '.tree__garland-container'
+    )!;
+    this.garlandButtonsContainer = this.element.querySelector(
+      '.tree__garland-buttons'
+    )!;
 
     this.playSound = new PlaySound().render(this.audioSnowflaks);
     this.snowflaks = new Snowflaks().render(this.audioSnowflaks);
@@ -51,6 +66,10 @@ class TreePage extends BaseElement {
     backgroundData.forEach((item) =>
       new ChooseBackground(item).render(this.chooseBackground)
     );
+    garlandData.forEach((item) =>
+      new ChooseGarland(item).render(this.garlandButtonsContainer)
+    );
+    this.toggleGarland = new GarlandToggle().render(this.chooseGarland);
   }
 }
 
