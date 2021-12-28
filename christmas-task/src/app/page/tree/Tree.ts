@@ -2,7 +2,7 @@ import './_tree.scss';
 
 import BaseElement from '../../components/BaseElement';
 import PlaySound from './PlaySound/PlaySound';
-import Snowflaks from './Snowflaks/Snowflaks';
+import SnowflakeButton from './SnowflakeButton/SnowflakeButton';
 import { treeData } from '../../utils/treeData';
 import ChooseTree from './ChooseTree/ChooseTree';
 import { backgroundData } from '../../utils/backgroundData';
@@ -15,6 +15,7 @@ import { state } from '../../utils/global';
 import data from '../../utils/data';
 import FavoriteToy from './TreeToy/FavoriteToy';
 import MainTree from './MainTree/MainTree';
+import Snowflakes from './Snowflakes/Snowflakes';
 
 class TreePage extends BaseElement {
   audioSnowflaks: HTMLElement;
@@ -29,6 +30,7 @@ class TreePage extends BaseElement {
   favotiteToysData: IToyCardData[];
   mainTreeContainer: HTMLElement;
   mainTree: HTMLElement;
+  snowflakesContainer: HTMLElement;
 
   constructor() {
     super('main', ['main']);
@@ -74,7 +76,7 @@ class TreePage extends BaseElement {
     this.treeToysContainer = this.element.querySelector('.tree__toys')!;
 
     this.playSound = new PlaySound().render(this.audioSnowflaks);
-    this.snowflaks = new Snowflaks().render(this.audioSnowflaks);
+    this.snowflaks = new SnowflakeButton().render(this.audioSnowflaks);
     treeData.forEach((item) => new ChooseTree(item).render(this.chooseTree));
     backgroundData.forEach((item) =>
       new ChooseBackground(item).render(this.chooseBackground)
@@ -83,6 +85,9 @@ class TreePage extends BaseElement {
       new ChooseGarland(item).render(this.garlandButtonsContainer)
     );
     this.toggleGarland = new GarlandToggle().render(this.chooseGarland);
+    this.snowflakesContainer = new Snowflakes(50).render(
+      this.mainTreeContainer
+    );
     this.mainTree = new MainTree().render(this.mainTreeContainer);
     this.favotiteToysData.forEach((item) => {
       new FavoriteToy(item).render(this.treeToysContainer);

@@ -4,6 +4,7 @@ class State {
   private favorite: IToyCardData[] = [];
   private treeUrl: string = 'public/tree/1.png';
   private backgroundUrl: string = 'public/bg/1.jpg';
+  private snowflakesClass: string = '';
 
   arrayPush(item?: IToyCardData) {
     if (item) this.favorite.push(item);
@@ -44,6 +45,14 @@ class State {
 
   getBackgroundUrl() {
     return this.backgroundUrl;
+  }
+
+  getSnowflakesClass() {
+    return this.snowflakesClass;
+  }
+
+  setSnowflakesClass(string: string) {
+    this.snowflakesClass = string;
   }
 
   dragStart(event: DragEvent) {
