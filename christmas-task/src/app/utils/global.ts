@@ -2,6 +2,7 @@ import { IToyCardData } from './alias';
 
 class State {
   private favorite: IToyCardData[] = [];
+  private treeUrl: string = 'public/tree/1.png';
 
   arrayPush(item?: IToyCardData) {
     if (item) this.favorite.push(item);
@@ -23,7 +24,16 @@ class State {
   }
 
   getArrayItems(array: IToyCardData[]) {
-    return (array = this.favorite.slice(0));
+    return (array = this.favorite.slice());
+  }
+
+  getTreeUrl(event: string) {
+    this.treeUrl = event;
+    console.log(this.treeUrl);
+  }
+
+  setTreeUrl() {
+    return this.treeUrl;
   }
 }
 

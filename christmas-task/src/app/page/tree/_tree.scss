@@ -1,9 +1,11 @@
 .tree {
-  padding-top: 20px;
+  display: flex;
+
   &__settings {
     display: flex;
     flex-direction: column;
     width: 400px;
+    padding-top: 25px;
   }
 
   &__audio-snowflaks {
@@ -47,7 +49,22 @@
   }
 
   &__container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    background-image: url('../../../assets/bg/1.jpg');
+    background-size: cover;
+    background-position: center;
+    height: calc(100vh - 140px);
+    min-height: 750px;
     width: 800px;
+    padding-bottom: 20px;
+    overflow: hidden;
+  }
+
+  &__main-tree {
+    width: 500px;
+    height: 714px;
   }
 
   &__toys {

@@ -25,15 +25,27 @@ class FavoriteToy extends BaseElement {
       );
       this.image.setAttribute('src', `public/toys/${data.num}.png`);
       this.image.setAttribute('alt', 'favorite-toy');
-      this.image.id = `${data.num}-${item}`;
+      this.image.id = `num:${data.num}item:${item}`;
       this.image.dataset.imgnum = data.num;
       this.image.draggable = true;
+      this.handlerDragStart();
     });
   }
 
   convertNumberToArray(num: string) {
     const number = +num;
     return Array.from(new Array(number), (x, i) => i + 1);
+  }
+
+  dragStart(event: DragEvent) {
+    const id = (<HTMLElement>event.target).id;
+    console.log(id);
+    event.dataTransfer!.setData('text/plain', id);
+    console.log(event.dataTransfer);
+  }
+
+  handlerDragStart() {
+    this.image!.addEventListener('dragstart', this.dragStart.bind(this));
   }
 }
 

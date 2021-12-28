@@ -14,6 +14,7 @@ import { IToyCardData } from '../../utils/alias';
 import { state } from '../../utils/global';
 import data from '../../utils/data';
 import FavoriteToy from './TreeToy/FavoriteToy';
+import MainTree from './MainTree/MainTree';
 
 class TreePage extends BaseElement {
   audioSnowflaks: HTMLElement;
@@ -26,6 +27,8 @@ class TreePage extends BaseElement {
   toggleGarland: HTMLElement;
   treeToysContainer: HTMLElement;
   favotiteToysData: IToyCardData[];
+  mainTreeContainer: HTMLElement;
+  mainTree: HTMLElement;
 
   constructor() {
     super('main', ['main']);
@@ -67,6 +70,7 @@ class TreePage extends BaseElement {
     this.garlandButtonsContainer = this.element.querySelector(
       '.tree__garland-buttons'
     )!;
+    this.mainTreeContainer = this.element.querySelector('.tree__container')!;
     this.treeToysContainer = this.element.querySelector('.tree__toys')!;
 
     this.playSound = new PlaySound().render(this.audioSnowflaks);
@@ -79,6 +83,7 @@ class TreePage extends BaseElement {
       new ChooseGarland(item).render(this.garlandButtonsContainer)
     );
     this.toggleGarland = new GarlandToggle().render(this.chooseGarland);
+    this.mainTree = new MainTree().render(this.mainTreeContainer);
     this.favotiteToysData.forEach((item) => {
       new FavoriteToy(item).render(this.treeToysContainer);
     });
@@ -88,7 +93,9 @@ class TreePage extends BaseElement {
     if (state.getArrayLength() <= 0) {
       return (this.favotiteToysData = data.slice(0, 20));
     } else {
-      return state.getArrayItems(this.favotiteToysData);
+      return (this.favotiteToysData = state.getArrayItems(
+        this.favotiteToysData
+      ));
     }
   }
 }
