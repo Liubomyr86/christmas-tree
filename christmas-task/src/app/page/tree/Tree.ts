@@ -87,6 +87,8 @@ class TreePage extends BaseElement {
     this.favotiteToysData.forEach((item) => {
       new FavoriteToy(item).render(this.treeToysContainer);
     });
+
+    this.changeBackgroundUrl(this.mainTreeContainer);
   }
 
   getFavoriteToy() {
@@ -97,6 +99,12 @@ class TreePage extends BaseElement {
         this.favotiteToysData
       ));
     }
+  }
+
+  changeBackgroundUrl(elem: HTMLElement) {
+    setInterval(() => {
+      elem.style.backgroundImage = `url(${state.getBackgroundUrl()})`;
+    }, 100);
   }
 }
 

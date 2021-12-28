@@ -11,7 +11,7 @@ class ChooseTree extends BaseElement {
 
   getPath(path: string) {
     this.element.addEventListener('click', () => {
-      state.getTreeUrl(path);
+      state.setTreeUrl(path);
     });
   }
 }

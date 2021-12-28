@@ -3,6 +3,7 @@ import { IToyCardData } from './alias';
 class State {
   private favorite: IToyCardData[] = [];
   private treeUrl: string = 'public/tree/1.png';
+  private backgroundUrl: string = 'public/bg/1.jpg';
 
   arrayPush(item?: IToyCardData) {
     if (item) this.favorite.push(item);
@@ -27,13 +28,40 @@ class State {
     return (array = this.favorite.slice());
   }
 
-  getTreeUrl(event: string) {
-    this.treeUrl = event;
+  setTreeUrl(path: string) {
+    this.treeUrl = path;
     console.log(this.treeUrl);
   }
 
-  setTreeUrl() {
+  getTreeUrl() {
     return this.treeUrl;
+  }
+
+  setBackgroundUrl(path: string) {
+    this.backgroundUrl = path;
+    console.log(this.backgroundUrl);
+  }
+
+  getBackgroundUrl() {
+    return this.backgroundUrl;
+  }
+
+  dragStart(event: DragEvent) {
+    const id = (<HTMLElement>event.target).id;
+    console.log(id);
+    event.dataTransfer!.setData('text/plain', id);
+    const draggedId = event.dataTransfer!.getData('text/plain');
+    console.log(draggedId);
+  }
+
+  overDrop(event: DragEvent) {
+    event.preventDefault();
+    // if (event.type !== 'drop') return;
+
+    const draggedId = event.dataTransfer!.getData('text/plain');
+    const draggedEl = document.getElementById(draggedId);
+    console.log(draggedId);
+    console.log(draggedEl);
   }
 }
 

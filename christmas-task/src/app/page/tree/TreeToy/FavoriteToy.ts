@@ -3,6 +3,7 @@ import './_favorite-toy.scss';
 import BaseElement from '../../../components/BaseElement';
 import data from '../../../utils/data';
 import { IToyCardData } from '../../../utils/alias';
+import { state } from '../../../utils/global';
 
 class FavoriteToy extends BaseElement {
   toyCounter: HTMLElement;
@@ -37,15 +38,18 @@ class FavoriteToy extends BaseElement {
     return Array.from(new Array(number), (x, i) => i + 1);
   }
 
-  dragStart(event: DragEvent) {
-    const id = (<HTMLElement>event.target).id;
-    console.log(id);
-    event.dataTransfer!.setData('text/plain', id);
-    console.log(event.dataTransfer);
-  }
+  // dragStart(event: DragEvent) {
+  //   const id = (<HTMLElement>event.target).id;
+  //   console.log(id);
+  //   event.dataTransfer!.setData('text/plain', id);
+  //   const draggedId = event.dataTransfer!.getData('text/plain');
+  //   console.log(draggedId);
+  // }
 
   handlerDragStart() {
-    this.image!.addEventListener('dragstart', this.dragStart.bind(this));
+    this.image!.addEventListener('dragstart', (event) => {
+      state.dragStart(event);
+    });
   }
 }
 

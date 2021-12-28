@@ -10,7 +10,7 @@ class MainTree extends BaseElement {
 
   constructor() {
     super('div', ['tree__main-tree']);
-    this.src = state.setTreeUrl();
+    this.src = state.getTreeUrl();
 
     this.element.innerHTML = `
       <map name="tree-map">
@@ -22,27 +22,36 @@ class MainTree extends BaseElement {
     this.mapArea = this.element.querySelector('[name="tree-map"]')!;
     this.changeSrcImage(this.imageTree);
     this.handleOverDrop();
+    this.handleDrop();
     console.dir(this.imageTree.src);
   }
 
   changeSrcImage(elem: HTMLImageElement) {
     setInterval(() => {
-      elem.src = state.setTreeUrl();
+      elem.src = state.getTreeUrl();
     }, 100);
   }
 
-  overDrop(event: DragEvent) {
-    event.preventDefault();
-    // if (event.type !== 'drop') return;
+  // overDrop(event: DragEvent) {
+  //   event.preventDefault();
+  //   // if (event.type !== 'drop') return;
 
-    const draggedId = event.dataTransfer!.getData('text/plain');
-    const draggedEl = document.getElementById(draggedId);
-    console.log(draggedId);
-    console.log(draggedEl);
-  }
+  //   const draggedId = event.dataTransfer!.getData('text/plain');
+  //   const draggedEl = document.getElementById(draggedId);
+  //   console.log(draggedId);
+  //   console.log(draggedEl);
+  // }
 
   handleOverDrop() {
-    this.mapArea.addEventListener('dragover', this.overDrop.bind(this));
+    this.mapArea.addEventListener('dragover', (event) => {
+      state.overDrop(event);
+    });
+  }
+
+  handleDrop() {
+    this.mapArea.addEventListener('drag', (event) => {
+      state.overDrop(event);
+    });
   }
 }
 
