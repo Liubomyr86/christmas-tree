@@ -20,6 +20,7 @@ class FavoriteToy extends BaseElement {
       ['favorite-toy__count'],
       data.amount
     ).render(this.element);
+
     this.arr.forEach((item) => {
       this.image = new BaseElement('img', ['favorite-toy__image']).render(
         this.element
@@ -38,17 +39,14 @@ class FavoriteToy extends BaseElement {
     return Array.from(new Array(number), (x, i) => i + 1);
   }
 
-  // dragStart(event: DragEvent) {
-  //   const id = (<HTMLElement>event.target).id;
-  //   console.log(id);
-  //   event.dataTransfer!.setData('text/plain', id);
-  //   const draggedId = event.dataTransfer!.getData('text/plain');
-  //   console.log(draggedId);
-  // }
-
   handlerDragStart() {
+    console.dir();
+
     this.image!.addEventListener('dragstart', (event) => {
       state.dragStart(event);
+      let count = this.element.childNodes.length - 1;
+
+      this.toyCounter.textContent = (count - 1).toString();
     });
   }
 }

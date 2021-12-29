@@ -8,7 +8,7 @@ import ChooseTree from './ChooseTree/ChooseTree';
 import { backgroundData } from '../../utils/backgroundData';
 import ChooseBackground from './ChooseBackground/ChooseBackground';
 import { garlandData } from '../../utils/garlandData';
-import ChooseGarland from './ChoseGarland/ChooseGarland';
+import GarlandButtons from './GarlandButtons/GarlandButtons';
 import GarlandToggle from './GarlandToggle/GarlandToggle';
 import { IToyCardData } from '../../utils/alias';
 import { state } from '../../utils/global';
@@ -82,7 +82,7 @@ class TreePage extends BaseElement {
       new ChooseBackground(item).render(this.chooseBackground)
     );
     garlandData.forEach((item) =>
-      new ChooseGarland(item).render(this.garlandButtonsContainer)
+      new GarlandButtons(item).render(this.garlandButtonsContainer)
     );
     this.toggleGarland = new GarlandToggle().render(this.chooseGarland);
     this.snowflakesContainer = new Snowflakes(50).render(

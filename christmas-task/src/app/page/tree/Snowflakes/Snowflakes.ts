@@ -16,7 +16,7 @@ class Snowflakes extends BaseElement {
   onOffSnow() {
     setInterval(() => {
       const name = state.getSnowflakesClass();
-      console.log(name);
+      // console.log(name);
       this.element.className = name;
     }, 100);
   }

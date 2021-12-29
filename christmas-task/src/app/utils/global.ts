@@ -5,6 +5,8 @@ class State {
   private treeUrl: string = 'public/tree/1.png';
   private backgroundUrl: string = 'public/bg/1.jpg';
   private snowflakesClass: string = '';
+  private dragX = 0;
+  private dragY = 0;
 
   arrayPush(item?: IToyCardData) {
     if (item) this.favorite.push(item);
@@ -31,7 +33,7 @@ class State {
 
   setTreeUrl(path: string) {
     this.treeUrl = path;
-    console.log(this.treeUrl);
+    // console.log(this.treeUrl);
   }
 
   getTreeUrl() {
@@ -40,7 +42,7 @@ class State {
 
   setBackgroundUrl(path: string) {
     this.backgroundUrl = path;
-    console.log(this.backgroundUrl);
+    // console.log(this.backgroundUrl);
   }
 
   getBackgroundUrl() {
@@ -56,21 +58,25 @@ class State {
   }
 
   dragStart(event: DragEvent) {
+    this.dragX =
+      event.clientX - (<HTMLElement>event.target).getBoundingClientRect().left;
+
+    this.dragY =
+      event.clientY - (<HTMLElement>event.target).getBoundingClientRect().top;
     const id = (<HTMLElement>event.target).id;
-    console.log(id);
     event.dataTransfer!.setData('text/plain', id);
-    const draggedId = event.dataTransfer!.getData('text/plain');
-    console.log(draggedId);
   }
 
   overDrop(event: DragEvent) {
     event.preventDefault();
-    // if (event.type !== 'drop') return;
-
+    if (event.type !== 'drop') return;
     const draggedId = event.dataTransfer!.getData('text/plain');
     const draggedEl = document.getElementById(draggedId);
-    console.log(draggedId);
-    console.log(draggedEl);
+    const draggedElHeight = draggedEl!.offsetHeight;
+
+    draggedEl!.style.top = `${event.clientY - this.dragY - draggedElHeight}px`;
+    draggedEl!.style.left = `${event.clientX - this.dragX}px`;
+    (<HTMLElement>event.target).append(draggedEl!);
   }
 }
 

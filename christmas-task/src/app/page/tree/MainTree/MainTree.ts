@@ -23,7 +23,7 @@ class MainTree extends BaseElement {
     this.changeSrcImage(this.imageTree);
     this.handleOverDrop();
     this.handleDrop();
-    console.dir(this.imageTree.src);
+    // console.dir(this.imageTree.src);
   }
 
   changeSrcImage(elem: HTMLImageElement) {
@@ -32,16 +32,6 @@ class MainTree extends BaseElement {
     }, 100);
   }
 
-  // overDrop(event: DragEvent) {
-  //   event.preventDefault();
-  //   // if (event.type !== 'drop') return;
-
-  //   const draggedId = event.dataTransfer!.getData('text/plain');
-  //   const draggedEl = document.getElementById(draggedId);
-  //   console.log(draggedId);
-  //   console.log(draggedEl);
-  // }
-
   handleOverDrop() {
     this.mapArea.addEventListener('dragover', (event) => {
       state.overDrop(event);
@@ -49,7 +39,7 @@ class MainTree extends BaseElement {
   }
 
   handleDrop() {
-    this.mapArea.addEventListener('drag', (event) => {
+    this.mapArea.addEventListener('drop', (event) => {
       state.overDrop(event);
     });
   }

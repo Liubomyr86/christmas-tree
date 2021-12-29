@@ -55,7 +55,7 @@ class ToyCard extends BaseElement {
           alert('Sorry, все слоты заполнены');
         } else {
           this.count += 1;
-          console.log(this.count);
+          // console.log(this.count);
           this.ribbon.classList.add('ribbon_checked');
           state.arrayPush(this.data);
         }

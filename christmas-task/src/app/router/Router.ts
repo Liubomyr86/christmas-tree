@@ -41,7 +41,7 @@ export class Router {
     window.onpopstate = () => {
       // this.currentRouteName.getURL();
       this.currentRouteName = window.location.hash.slice(1);
-      console.log(this.currentRouteName);
+      // console.log(this.currentRouteName);
       this.currentRoute = ROUTING.find(
         (page) => page.name === this.currentRouteName
       );
