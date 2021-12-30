@@ -7,7 +7,7 @@ import { treeData } from '../../utils/treeData';
 import ChooseTree from './ChooseTree/ChooseTree';
 import { backgroundData } from '../../utils/backgroundData';
 import ChooseBackground from './ChooseBackground/ChooseBackground';
-import { garlandButtonData, garlandData } from '../../utils/garlandData';
+import { garlandButtonData } from '../../utils/garlandData';
 import GarlandButtons from './GarlandButtons/GarlandButtons';
 import GarlandToggle from './GarlandToggle/GarlandToggle';
 import { IToyCardData } from '../../utils/alias';
@@ -36,6 +36,9 @@ class TreePage extends BaseElement {
 
   garlandColor: string = 'multicolor';
   isChecked = false;
+
+  dragX = 0;
+  dragY = 0;
 
   constructor() {
     super('main', ['main']);
@@ -103,13 +106,16 @@ class TreePage extends BaseElement {
       this.isChecked,
       this.garlandOnOff.bind(this)
     ).render(this.chooseGarland);
-    console.dir(this.toggleGarland);
     this.snowflakesContainer = new Snowflakes(50).render(
       this.mainTreeContainer
     );
-    this.mainTree = new MainTree().render(this.mainTreeContainer);
+    this.mainTree = new MainTree(this.getCoordinates.bind(this)).render(
+      this.mainTreeContainer
+    );
     this.favotiteToysData.forEach((item) => {
-      new FavoriteToy(item).render(this.treeToysContainer);
+      new FavoriteToy(item, this.setCoordinates.bind(this)).render(
+        this.treeToysContainer
+      );
     });
 
     this.changeBackgroundUrl(this.mainTreeContainer);
@@ -123,6 +129,16 @@ class TreePage extends BaseElement {
         this.favotiteToysData
       ));
     }
+  }
+
+  setCoordinates(x: number, y: number) {
+    this.dragX = x;
+    this.dragY = y;
+  }
+
+  getCoordinates() {
+    const coordinates = [this.dragX, this.dragY];
+    return coordinates;
   }
 
   changeBackgroundUrl(elem: HTMLElement) {

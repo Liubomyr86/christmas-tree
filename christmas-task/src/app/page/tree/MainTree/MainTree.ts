@@ -7,10 +7,14 @@ class MainTree extends BaseElement {
   mapArea: HTMLElement;
   src: string;
   imageTree: HTMLImageElement;
+  dragX: number = 0;
+  dragY: number = 0;
+  getCoordinates: () => number[];
 
-  constructor() {
+  constructor(getCoordinates: () => number[]) {
     super('div', ['tree__main-tree']);
     this.src = state.getTreeUrl();
+    this.getCoordinates = getCoordinates;
 
     this.element.innerHTML = `
       <map name="tree-map">
@@ -23,7 +27,6 @@ class MainTree extends BaseElement {
     this.changeSrcImage(this.imageTree);
     this.handleOverDrop();
     this.handleDrop();
-    // console.dir(this.imageTree.src);
   }
 
   changeSrcImage(elem: HTMLImageElement) {
@@ -32,15 +35,30 @@ class MainTree extends BaseElement {
     }, 100);
   }
 
+  overDrop(event: DragEvent) {
+    event.preventDefault();
+    if (event.type !== 'drop') return;
+    const draggedId = event.dataTransfer!.getData('text/plain');
+    const draggedEl = document.getElementById(draggedId);
+    const draggedElHeight = draggedEl!.offsetHeight;
+
+    draggedEl!.dataset.location = '2';
+    draggedEl!.style.top = `${event.clientY - this.dragY - draggedElHeight}px`;
+    draggedEl!.style.left = `${event.clientX - this.dragX}px`;
+    (<HTMLElement>event.target).append(draggedEl!);
+  }
+
   handleOverDrop() {
     this.mapArea.addEventListener('dragover', (event) => {
-      state.overDrop(event);
+      this.overDrop(event);
     });
   }
 
   handleDrop() {
     this.mapArea.addEventListener('drop', (event) => {
-      state.overDrop(event);
+      [this.dragX, this.dragY] = this.getCoordinates();
+
+      this.overDrop(event);
     });
   }
 }
