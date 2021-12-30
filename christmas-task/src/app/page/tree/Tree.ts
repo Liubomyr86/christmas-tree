@@ -7,7 +7,7 @@ import { treeData } from '../../utils/treeData';
 import ChooseTree from './ChooseTree/ChooseTree';
 import { backgroundData } from '../../utils/backgroundData';
 import ChooseBackground from './ChooseBackground/ChooseBackground';
-import { garlandData } from '../../utils/garlandData';
+import { garlandButtonData, garlandData } from '../../utils/garlandData';
 import GarlandButtons from './GarlandButtons/GarlandButtons';
 import GarlandToggle from './GarlandToggle/GarlandToggle';
 import { IToyCardData } from '../../utils/alias';
@@ -16,6 +16,7 @@ import data from '../../utils/data';
 import FavoriteToy from './TreeToy/FavoriteToy';
 import MainTree from './MainTree/MainTree';
 import Snowflakes from './Snowflakes/Snowflakes';
+import GarlandTree from './GarlandTree/GarlandTree';
 
 class TreePage extends BaseElement {
   audioSnowflaks: HTMLElement;
@@ -25,12 +26,16 @@ class TreePage extends BaseElement {
   chooseBackground: HTMLElement;
   chooseGarland: HTMLElement;
   garlandButtonsContainer: any;
-  toggleGarland: HTMLElement;
+  toggleGarland: HTMLElement | undefined;
   treeToysContainer: HTMLElement;
   favotiteToysData: IToyCardData[];
   mainTreeContainer: HTMLElement;
   mainTree: HTMLElement;
   snowflakesContainer: HTMLElement;
+  garlandTreeContainer: HTMLElement;
+
+  garlandColor: string = 'multicolor';
+  isChecked = false;
 
   constructor() {
     super('main', ['main']);
@@ -56,8 +61,13 @@ class TreePage extends BaseElement {
               </div>
             </div>
           </div>
-          <div class="tree__container"></div>
-          <div class="tree__toys"></div>
+          <div class="tree__container">
+            <div class="tree__garland garland"></div>
+          </div>
+          <div class="tree__toys">
+            <h2 class="tree__title">Toys</h2>
+            <div class="tree__toys-container"></div>
+          </div>
         </div>
       </div>
     `;
@@ -73,7 +83,10 @@ class TreePage extends BaseElement {
       '.tree__garland-buttons'
     )!;
     this.mainTreeContainer = this.element.querySelector('.tree__container')!;
-    this.treeToysContainer = this.element.querySelector('.tree__toys')!;
+    this.treeToysContainer = this.element.querySelector(
+      '.tree__toys-container'
+    )!;
+    this.garlandTreeContainer = this.element.querySelector('.tree__garland')!;
 
     this.playSound = new PlaySound().render(this.audioSnowflaks);
     this.snowflaks = new SnowflakeButton().render(this.audioSnowflaks);
@@ -81,10 +94,16 @@ class TreePage extends BaseElement {
     backgroundData.forEach((item) =>
       new ChooseBackground(item).render(this.chooseBackground)
     );
-    garlandData.forEach((item) =>
-      new GarlandButtons(item).render(this.garlandButtonsContainer)
+    garlandButtonData.forEach((item) =>
+      new GarlandButtons(item, this.garlandOn.bind(this)).render(
+        this.garlandButtonsContainer
+      )
     );
-    this.toggleGarland = new GarlandToggle().render(this.chooseGarland);
+    this.toggleGarland = new GarlandToggle(
+      this.isChecked,
+      this.garlandOnOff.bind(this)
+    ).render(this.chooseGarland);
+    console.dir(this.toggleGarland);
     this.snowflakesContainer = new Snowflakes(50).render(
       this.mainTreeContainer
     );
@@ -110,6 +129,27 @@ class TreePage extends BaseElement {
     setInterval(() => {
       elem.style.backgroundImage = `url(${state.getBackgroundUrl()})`;
     }, 100);
+  }
+
+  garlandOn(color: string, flag: boolean) {
+    this.garlandColor = color;
+    this.isChecked = flag;
+    this.garlandTreeContainer!.innerHTML = '';
+    this.garlandTreeContainer.append(
+      new GarlandTree(this.garlandColor, this.isChecked).element
+    );
+    this.chooseGarland.removeChild(this.chooseGarland.lastChild!);
+    this.chooseGarland.append(
+      new GarlandToggle(this.isChecked, this.garlandOnOff.bind(this)).element
+    );
+  }
+
+  garlandOnOff(flag: boolean) {
+    this.isChecked = flag;
+    this.garlandTreeContainer!.innerHTML = '';
+    this.garlandTreeContainer.append(
+      new GarlandTree(this.garlandColor, this.isChecked).element
+    );
   }
 }
 

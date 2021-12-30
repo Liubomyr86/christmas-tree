@@ -1,7 +1,6 @@
 import MainPage from '../page/main/MainPage';
 import ToysPage from '../page/toys/ToysPage';
 import TreePage from '../page/tree/Tree';
-import { IToyCardData } from '../utils/alias';
 
 const DEFAULT_ROUTE: { name: string; component: () => void } = {
   name: 'default',

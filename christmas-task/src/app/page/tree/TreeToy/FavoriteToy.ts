@@ -40,8 +40,6 @@ class FavoriteToy extends BaseElement {
   }
 
   handlerDragStart() {
-    console.dir();
-
     this.image!.addEventListener('dragstart', (event) => {
       state.dragStart(event);
       let count = this.element.childNodes.length - 1;

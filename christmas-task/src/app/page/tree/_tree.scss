@@ -69,13 +69,18 @@
 
   &__toys {
     display: flex;
+    flex-direction: column;
+    width: 400px;
+    padding-top: 25px;
+    padding-left: 25px;
+  }
+  &__toys-container {
+    display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: flex-start;
     align-content: flex-start;
     gap: 10px;
-    width: 400px;
-    padding-top: 25px;
-    padding-left: 25px;
+    width: 100%;
   }
 }

@@ -25,3 +25,7 @@ export interface IFilterKeys {
   size?: string;
   selected: boolean;
 }
+
+export interface IGarlandData {
+  line: number;
+}
