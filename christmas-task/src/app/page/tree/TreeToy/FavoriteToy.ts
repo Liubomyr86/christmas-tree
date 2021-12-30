@@ -43,13 +43,11 @@ class FavoriteToy extends BaseElement {
   handlerDragStart() {
     this.image!.addEventListener('dragstart', (event) => {
       state.dragStart(event);
-      let count = this.element.childNodes.length - 1;
-
-      this.toyCounter.textContent = (count - 1).toString();
     });
   }
 
   dragEnd(event: DragEvent) {
+    console.log(event.dataTransfer?.dropEffect);
     if (event.dataTransfer?.dropEffect === 'none') {
       if (this.image!.parentNode?.nodeName === 'AREA') {
         const elemData = this.image!.dataset.imgnum?.split('-');
@@ -65,8 +63,13 @@ class FavoriteToy extends BaseElement {
         this.image!.style.left = `${left + 12}px`;
 
         container?.append(this.image!);
-        console.log(container);
       }
+
+      let count = this.element.childNodes.length - 1;
+      this.toyCounter.textContent = count.toString();
+    } else {
+      let count = this.element.childNodes.length - 1;
+      this.toyCounter.textContent = count.toString();
     }
   }
 
