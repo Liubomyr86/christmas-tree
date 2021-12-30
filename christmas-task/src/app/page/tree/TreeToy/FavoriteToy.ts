@@ -28,9 +28,10 @@ class FavoriteToy extends BaseElement {
       this.image.setAttribute('src', `public/toys/${data.num}.png`);
       this.image.setAttribute('alt', 'favorite-toy');
       this.image.id = `num:${data.num}item:${item}`;
-      this.image.dataset.imgnum = data.num;
+      this.image.dataset.imgnum = `${data.num}-${item}`;
       this.image.draggable = true;
       this.handlerDragStart();
+      this.handleDragEnd();
     });
   }
 
@@ -46,6 +47,34 @@ class FavoriteToy extends BaseElement {
 
       this.toyCounter.textContent = (count - 1).toString();
     });
+  }
+
+  dragEnd(event: DragEvent) {
+    if (event.dataTransfer?.dropEffect === 'none') {
+      if (this.image!.parentNode?.nodeName === 'AREA') {
+        const elemData = this.image!.dataset.imgnum?.split('-');
+        console.log(elemData![0]);
+        const container = document.querySelector(
+          `[data-num="${elemData![0]}"]`
+        );
+        const top = (<HTMLElement>container!).offsetTop;
+        const left = (<HTMLElement>container!).offsetLeft;
+        console.log(top, left);
+
+        this.image!.style.top = `${top + 12}px`;
+        this.image!.style.left = `${left + 12}px`;
+
+        container?.append(this.image!);
+        console.log(container);
+      }
+    }
+  }
+
+  handleDragEnd() {
+    this.image!.addEventListener('dragend', (event) => {
+      this.dragEnd(event);
+    });
+    // this.image!.removeEventListener('dragend', this.dragEnd);
   }
 }
 
