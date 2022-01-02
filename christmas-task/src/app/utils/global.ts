@@ -3,7 +3,6 @@ import { IToyCardData } from './alias';
 class State {
   private favorite: IToyCardData[] = [];
   private treeUrl: string = 'public/tree/1.png';
-  private backgroundUrl: string = 'public/bg/1.jpg';
   private snowflakesClass: string = '';
 
   arrayPush(item?: IToyCardData) {
@@ -29,20 +28,13 @@ class State {
     return (array = this.favorite.slice());
   }
 
+  // -----------------------------//
   setTreeUrl(path: string) {
     this.treeUrl = path;
   }
 
   getTreeUrl() {
     return this.treeUrl;
-  }
-
-  setBackgroundUrl(path: string) {
-    this.backgroundUrl = path;
-  }
-
-  getBackgroundUrl() {
-    return this.backgroundUrl;
   }
 
   getSnowflakesClass() {

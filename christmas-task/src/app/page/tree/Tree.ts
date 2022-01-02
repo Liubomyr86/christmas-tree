@@ -25,7 +25,7 @@ class TreePage extends BaseElement {
   chooseTree: HTMLElement;
   chooseBackground: HTMLElement;
   chooseGarland: HTMLElement;
-  garlandButtonsContainer: any;
+  garlandButtonsContainer: HTMLElement;
   toggleGarland: HTMLElement | undefined;
   treeToysContainer: HTMLElement;
   favotiteToysData: IToyCardData[];
@@ -66,6 +66,7 @@ class TreePage extends BaseElement {
           </div>
           <div class="tree__container">
             <div class="tree__garland garland"></div>
+            <div class="tree__main-tree"></div>
           </div>
           <div class="tree__toys">
             <h2 class="tree__title">Toys</h2>
@@ -86,6 +87,7 @@ class TreePage extends BaseElement {
       '.tree__garland-buttons'
     )!;
     this.mainTreeContainer = this.element.querySelector('.tree__container')!;
+    this.mainTree = this.element.querySelector('.tree__main-tree')!;
     this.treeToysContainer = this.element.querySelector(
       '.tree__toys-container'
     )!;
@@ -93,9 +95,15 @@ class TreePage extends BaseElement {
 
     this.playSound = new PlaySound().render(this.audioSnowflaks);
     this.snowflaks = new SnowflakeButton().render(this.audioSnowflaks);
-    treeData.forEach((item) => new ChooseTree(item).render(this.chooseTree));
+    treeData.forEach((item) =>
+      new ChooseTree(item, this.changeTreeSrc.bind(this)).render(
+        this.chooseTree
+      )
+    );
     backgroundData.forEach((item) =>
-      new ChooseBackground(item).render(this.chooseBackground)
+      new ChooseBackground(item, this.changeBackgroundUrl.bind(this)).render(
+        this.chooseBackground
+      )
     );
     garlandButtonData.forEach((item) =>
       new GarlandButtons(item, this.garlandOn.bind(this)).render(
@@ -109,16 +117,17 @@ class TreePage extends BaseElement {
     this.snowflakesContainer = new Snowflakes(50).render(
       this.mainTreeContainer
     );
-    this.mainTree = new MainTree(this.getCoordinates.bind(this)).render(
-      this.mainTreeContainer
-    );
+    // this.mainTree = new MainTree(this.getCoordinatesForToy.bind(this)).render(
+    //   this.mainTreeContainer
+    // );
     this.favotiteToysData.forEach((item) => {
-      new FavoriteToy(item, this.setCoordinates.bind(this)).render(
+      new FavoriteToy(item, this.setCoordinatesForToy.bind(this)).render(
         this.treeToysContainer
       );
     });
 
-    this.changeBackgroundUrl(this.mainTreeContainer);
+    this.changeBackgroundUrl('public/bg/1.jpg');
+    this.changeTreeSrc('public/tree/1.png');
   }
 
   getFavoriteToy() {
@@ -131,20 +140,25 @@ class TreePage extends BaseElement {
     }
   }
 
-  setCoordinates(x: number, y: number) {
+  setCoordinatesForToy(x: number, y: number) {
     this.dragX = x;
     this.dragY = y;
   }
 
-  getCoordinates() {
+  getCoordinatesForToy() {
     const coordinates = [this.dragX, this.dragY];
     return coordinates;
   }
 
-  changeBackgroundUrl(elem: HTMLElement) {
-    setInterval(() => {
-      elem.style.backgroundImage = `url(${state.getBackgroundUrl()})`;
-    }, 100);
+  changeBackgroundUrl(path: string) {
+    this.mainTreeContainer.style.backgroundImage = `url(${path})`;
+  }
+
+  changeTreeSrc(src: string) {
+    this.mainTree.innerHTML = '';
+    this.mainTree.append(
+      new MainTree(this.getCoordinatesForToy.bind(this), src).element
+    );
   }
 
   garlandOn(color: string, flag: boolean) {

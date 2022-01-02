@@ -3,15 +3,18 @@ import BaseElement from '../../../components/BaseElement';
 import { state } from '../../../utils/global';
 
 class ChooseTree extends BaseElement {
-  constructor(path: string) {
+  setImaeSrc: (path: string) => void;
+
+  constructor(path: string, setImageSrc: (path: string) => void) {
     super('div', ['tree-item']);
+    this.setImaeSrc = setImageSrc;
     this.element.style.backgroundImage = `url(${path})`;
     this.getPath(path);
   }
 
   getPath(path: string) {
     this.element.addEventListener('click', () => {
-      state.setTreeUrl(path);
+      this.setImaeSrc(path);
     });
   }
 }
