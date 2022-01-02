@@ -117,9 +117,6 @@ class TreePage extends BaseElement {
     this.snowflakesContainer = new Snowflakes(50).render(
       this.mainTreeContainer
     );
-    // this.mainTree = new MainTree(this.getCoordinatesForToy.bind(this)).render(
-    //   this.mainTreeContainer
-    // );
     this.favotiteToysData.forEach((item) => {
       new FavoriteToy(item, this.setCoordinatesForToy.bind(this)).render(
         this.treeToysContainer
