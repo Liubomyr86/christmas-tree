@@ -4,18 +4,23 @@ import BaseElement from '../../../components/BaseElement';
 import { state } from '../../../utils/global';
 
 class SnowflakeButton extends BaseElement {
-  constructor() {
+  setClassName: (className: string) => void;
+  isChecked: boolean = false;
+
+  constructor(setClassName: (className: string) => void) {
     super('span', ['snowflake']);
+    this.setClassName = setClassName;
     this.onOffSnowflakes();
   }
 
   onOffSnowflakes() {
     this.element.addEventListener('click', () => {
-      const snowflakeClassName = state.getSnowflakesClass();
-      if (!snowflakeClassName) {
-        state.setSnowflakesClass('snowflakes');
+      if (!this.isChecked) {
+        this.setClassName('snowflakes');
+        this.isChecked = true;
       } else {
-        state.setSnowflakesClass('');
+        this.setClassName('');
+        this.isChecked = false;
       }
     });
   }

@@ -21,7 +21,7 @@ import GarlandTree from './GarlandTree/GarlandTree';
 class TreePage extends BaseElement {
   audioSnowflaks: HTMLElement;
   playSound: HTMLElement;
-  snowflaks: HTMLElement;
+  snowflakes: HTMLElement | undefined;
   chooseTree: HTMLElement;
   chooseBackground: HTMLElement;
   chooseGarland: HTMLElement;
@@ -39,6 +39,7 @@ class TreePage extends BaseElement {
 
   dragX = 0;
   dragY = 0;
+  snowflaksButton: HTMLElement;
 
   constructor() {
     super('main', ['main']);
@@ -65,6 +66,7 @@ class TreePage extends BaseElement {
             </div>
           </div>
           <div class="tree__container">
+            <div class="tree__snowflakes"></div>
             <div class="tree__garland garland"></div>
             <div class="tree__main-tree"></div>
           </div>
@@ -92,9 +94,12 @@ class TreePage extends BaseElement {
       '.tree__toys-container'
     )!;
     this.garlandTreeContainer = this.element.querySelector('.tree__garland')!;
+    this.snowflakesContainer = this.element.querySelector('.tree__snowflakes')!;
 
     this.playSound = new PlaySound().render(this.audioSnowflaks);
-    this.snowflaks = new SnowflakeButton().render(this.audioSnowflaks);
+    this.snowflaksButton = new SnowflakeButton(
+      this.onOffSnow.bind(this)
+    ).render(this.audioSnowflaks);
     treeData.forEach((item) =>
       new ChooseTree(item, this.changeTreeSrc.bind(this)).render(
         this.chooseTree
@@ -114,9 +119,7 @@ class TreePage extends BaseElement {
       this.isChecked,
       this.garlandOnOff.bind(this)
     ).render(this.chooseGarland);
-    this.snowflakesContainer = new Snowflakes(50).render(
-      this.mainTreeContainer
-    );
+    // this.snowflakes = new Snowflakes(50).render(this.snowflakesContainer);
     this.favotiteToysData.forEach((item) => {
       new FavoriteToy(item, this.setCoordinatesForToy.bind(this)).render(
         this.treeToysContainer
@@ -125,6 +128,7 @@ class TreePage extends BaseElement {
 
     this.changeBackgroundUrl('public/bg/1.jpg');
     this.changeTreeSrc('public/tree/1.png');
+    this.onOffSnow('');
   }
 
   getFavoriteToy() {
@@ -145,6 +149,13 @@ class TreePage extends BaseElement {
   getCoordinatesForToy() {
     const coordinates = [this.dragX, this.dragY];
     return coordinates;
+  }
+
+  onOffSnow(className: string) {
+    this.snowflakesContainer.innerHTML = '';
+    this.snowflakes = new Snowflakes(50, className).render(
+      this.snowflakesContainer
+    );
   }
 
   changeBackgroundUrl(path: string) {

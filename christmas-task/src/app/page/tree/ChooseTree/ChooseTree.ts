@@ -1,6 +1,5 @@
 import './_choose-tree.scss';
 import BaseElement from '../../../components/BaseElement';
-import { state } from '../../../utils/global';
 
 class ChooseTree extends BaseElement {
   setImaeSrc: (path: string) => void;

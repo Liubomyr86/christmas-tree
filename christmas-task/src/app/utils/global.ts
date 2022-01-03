@@ -27,23 +27,6 @@ class State {
   getArrayItems(array: IToyCardData[]) {
     return (array = this.favorite.slice());
   }
-
-  // -----------------------------//
-  setTreeUrl(path: string) {
-    this.treeUrl = path;
-  }
-
-  getTreeUrl() {
-    return this.treeUrl;
-  }
-
-  getSnowflakesClass() {
-    return this.snowflakesClass;
-  }
-
-  setSnowflakesClass(string: string) {
-    this.snowflakesClass = string;
-  }
 }
 
 export const state = new State();
