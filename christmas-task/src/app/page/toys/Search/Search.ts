@@ -2,9 +2,13 @@ import './_search.scss';
 import BaseElement from '../../../components/BaseElement';
 
 class Search extends BaseElement {
-  setData: (name: string) => void;
+  setData: () => void;
+  private searchValue: string = '';
+  checkSearchValue() {
+    return this.searchValue;
+  }
 
-  constructor(setData: (name: string) => void) {
+  constructor(setData: () => void) {
     super('input', ['search']);
     this.element.setAttribute('type', 'search');
     this.element.setAttribute('autocomplete', 'off');
@@ -16,8 +20,10 @@ class Search extends BaseElement {
 
   searchCard() {
     this.element.addEventListener('input', (event) => {
-      let value = (<HTMLInputElement>event.target).value.toLowerCase().trim();
-      this.setData(value);
+      this.searchValue = (<HTMLInputElement>event.target).value
+        .toLowerCase()
+        .trim();
+      this.setData();
     });
   }
 }

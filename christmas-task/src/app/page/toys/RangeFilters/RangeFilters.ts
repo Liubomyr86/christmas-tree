@@ -63,7 +63,6 @@ class RangeFilters extends BaseElement {
   }
 
   countSlider() {
-    // const snapSlider = document.getElementById('count-slider');
     noUiSlider.create(this.countSliderElement, {
       start: [1, 12],
       snap: true,

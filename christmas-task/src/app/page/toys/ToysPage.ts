@@ -7,7 +7,7 @@ import ValueFilters from './ValueFilters/ValueFilters';
 import Search from './Search/Search';
 import Sorting from './Sort/Sorting';
 import ToyCard from './ToyCard/ToyCard';
-import { IFilterKeys, IToyCardData } from '../../utils/alias';
+import { IToyCardData } from '../../utils/alias';
 
 class ToysPage extends BaseElement {
   filterData: (IToyCardData | undefined)[];
@@ -15,12 +15,9 @@ class ToysPage extends BaseElement {
   private controls: HTMLElement;
   private cardsContainer: HTMLElement;
   private toyCards: ToyCard[] = [];
-  private curentFilters: ToyCard[] = [];
-  private filterKeys: IFilterKeys[] = [];
-  private keysSelectedFilter: string[] = [];
 
-  private valueFilters: HTMLElement;
-  private searchElement: HTMLElement;
+  private valueFilters: ValueFilters;
+  private searchElement: Search;
   private rangeFilters: HTMLElement;
   private sorting: HTMLElement;
   private resetButton: HTMLElement;
@@ -41,12 +38,10 @@ class ToysPage extends BaseElement {
     this.controls = this.element.querySelector('.toys__controls')!;
     this.cardsContainer = this.element.querySelector('.toys__cards-container')!;
 
-    this.searchElement = new Search(this.setSearchFilter.bind(this)).render(
-      this.controls
-    );
-    this.valueFilters = new ValueFilters(
-      this.setValueFilters.bind(this)
-    ).render(this.controls);
+    this.searchElement = new Search(this.setValueFilters.bind(this));
+    this.searchElement.render(this.controls);
+    this.valueFilters = new ValueFilters(this.setValueFilters.bind(this));
+    this.valueFilters.render(this.controls);
     this.rangeFilters = new RangeFilters().render(this.controls);
     this.sorting = new Sorting().render(this.controls);
 
@@ -56,162 +51,31 @@ class ToysPage extends BaseElement {
       'Reset filters'
     ).render(this.controls);
 
-    this.filterKeys = [
-      { shape: 'ball', selected: false },
-      { shape: 'figurine', selected: false },
-      { shape: 'bell', selected: false },
-      { shape: 'cone', selected: false },
-      { shape: 'snowflake', selected: false },
-
-      { color: 'yellow', selected: false },
-      { color: 'green', selected: false },
-      { color: 'white', selected: false },
-      { color: 'red', selected: false },
-      { color: 'blue', selected: false },
-
-      { size: 'large', selected: false },
-      { size: 'average', selected: false },
-      { size: 'small', selected: false },
-    ];
     this.toyCards = data.map((item) => new ToyCard(item));
-    this.setSearchFilter('');
-    this.setValueFilters('', '', false);
+    this.setValueFilters();
   }
 
   getData() {
     const toysData = data;
-
     return toysData;
   }
 
-  setSearchFilter(name: string) {
+  setValueFilters() {
     this.cardsContainer.innerHTML = '';
     this.toyCards
-      .filter((item) => item.data.name.toLowerCase().includes(name))
+      .filter((item) => {
+        return (
+          item.data.name
+            .toLowerCase()
+            .includes(this.searchElement.checkSearchValue()) &&
+          this.valueFilters.checkShapeIsSelected(item.data.shape) &&
+          this.valueFilters.checkColorIsSelected(item.data.color) &&
+          this.valueFilters.checkSizeIsSelected(item.data.size)
+        );
+      })
       .forEach((item) => {
         this.cardsContainer.append(item.element);
       });
-  }
-
-  pushData(category: string, name: string, flag: boolean) {
-    switch (category) {
-      case 'shape':
-        this.filterKeys.forEach((item) => {
-          if (item.shape?.includes(name)) item.selected = flag;
-        });
-        this.filterKeys
-          .filter((item) => item.selected)
-          .forEach((item) => {
-            if (this.keysSelectedFilter.indexOf(item.shape!) === -1)
-              this.keysSelectedFilter.push(item.shape!);
-          });
-        break;
-      case 'color':
-        this.filterKeys.forEach((item) => {
-          if (item.color?.includes(name)) item.selected = flag;
-        });
-        this.filterKeys
-          .filter((item) => item.selected)
-          .forEach((item) => {
-            if (this.keysSelectedFilter.indexOf(item.color!) === -1)
-              this.keysSelectedFilter.push(item.color!);
-          });
-        break;
-      case 'size':
-        this.filterKeys.forEach((item) => {
-          if (item.size?.includes(name)) item.selected = flag;
-        });
-        this.filterKeys
-          .filter((item) => item.selected)
-          .forEach((item) => {
-            if (this.keysSelectedFilter.indexOf(item.size!) === -1)
-              this.keysSelectedFilter.push(item.size!);
-          });
-        break;
-      default:
-        break;
-    }
-  }
-
-  popData(category: string, name: string, flag: boolean) {
-    let i = 0;
-    while (i < this.keysSelectedFilter.length) {
-      if (this.keysSelectedFilter[i] === name) {
-        this.keysSelectedFilter.splice(i, 1);
-      } else {
-        ++i;
-      }
-    }
-    switch (category) {
-      case 'shape':
-        this.filterKeys.forEach((item) => {
-          if (item.shape?.includes(name)) item.selected = flag;
-        });
-        break;
-      case 'color':
-        this.filterKeys.forEach((item) => {
-          if (item.color?.includes(name)) item.selected = flag;
-        });
-        break;
-      case 'size':
-        this.filterKeys.forEach((item) => {
-          if (item.size?.includes(name)) item.selected = flag;
-        });
-        break;
-      default:
-        break;
-    }
-  }
-
-  setValueFilters(category: string, name: string, flag: boolean) {
-    // console.log(category, name, flag);
-
-    this.cardsContainer.innerHTML = '';
-    switch (flag) {
-      case true:
-        if (!category && !name && this.curentFilters.length === 0) {
-          this.toyCards.forEach((item) => {
-            this.cardsContainer.append(item.element);
-          });
-        } else {
-          this.pushData(category, name, flag);
-          this.curentFilters = this.toyCards.filter((item) => {
-            return (
-              // this.valueFilters.checkShapeIsSelected(item.data.shape) &&
-              this.keysSelectedFilter.includes(item.data.color) &&
-              this.keysSelectedFilter.includes(item.data.size)
-            );
-          });
-          this.curentFilters.forEach((item) =>
-            this.cardsContainer.append(item.element)
-          );
-        }
-        break;
-      case false:
-        this.popData(category, name, flag);
-        // console.log(this.curentFilters);
-        if (this.keysSelectedFilter.length === 0) {
-          this.toyCards.forEach((item) => {
-            this.cardsContainer.append(item.element);
-          });
-        } else {
-          this.curentFilters = this.toyCards.filter((item) => {
-            if (
-              this.keysSelectedFilter.includes(item.data.shape) ||
-              this.keysSelectedFilter.includes(item.data.color) ||
-              this.keysSelectedFilter.includes(item.data.size)
-            )
-              return item;
-          });
-          this.curentFilters.forEach((item) =>
-            this.cardsContainer.append(item.element)
-          );
-        }
-
-        break;
-      default:
-        break;
-    }
   }
 }
 export default ToysPage;

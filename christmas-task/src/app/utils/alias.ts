@@ -19,13 +19,6 @@ export interface IToyCardData {
   favorite: boolean;
 }
 
-export interface IFilterKeys {
-  shape?: string;
-  color?: string;
-  size?: string;
-  selected: boolean;
-}
-
 export interface IGarlandData {
   line: number;
 }

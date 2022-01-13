@@ -4,6 +4,10 @@ import BaseElement from '../../../components/BaseElement';
 import Title from '../../../components/Title';
 import { IFilterData, IToyCardData } from '../../../utils/alias';
 import data from '../../../utils/data';
+import ShapeFilter from './ShapeFilter/ShapeFilter';
+import ColorFilter from './ColorFilter/ColorFilter';
+import SizeFilter from './SizeFilter/SizeFilter';
+import FavoriteFilter from './FavoriteFilter/FavoriteFilter';
 
 class ValueFilters extends BaseElement {
   data: IFilterData;
@@ -13,24 +17,25 @@ class ValueFilters extends BaseElement {
   colorContainer: HTMLElement;
   sizeContainer: HTMLElement;
   favoriteContainer: HTMLElement;
-  checkbox: HTMLElement;
-  checkboxContainer: HTMLElement;
-  lable: HTMLElement;
-  filter: (category: string, name: string, flag: boolean) => void;
+  filter: () => void;
 
   private selectedShapes = new Set<string>();
+  private selectedColors = new Set<string>();
+  private selectedSize = new Set<string>();
 
   checkShapeIsSelected(shape: string): boolean {
     return this.selectedShapes.size === 0 || this.selectedShapes.has(shape);
   }
 
-  constructor(
-    pushDatasetValueFilters: (
-      category: string,
-      name: string,
-      flag: boolean
-    ) => void
-  ) {
+  checkColorIsSelected(color: string): boolean {
+    return this.selectedColors.size === 0 || this.selectedColors.has(color);
+  }
+
+  checkSizeIsSelected(size: string): boolean {
+    return this.selectedSize.size === 0 || this.selectedSize.has(size);
+  }
+
+  constructor(pushDatasetValueFilters: () => void) {
     super('div', ['filters']);
     this.filter = pushDatasetValueFilters;
     this.data = this.getToysData();
@@ -40,65 +45,12 @@ class ValueFilters extends BaseElement {
       'Filters by value'
     ).render(this.element);
 
-    this.shapeContainer = new BaseElement('div', ['shape']).render(
-      this.element
-    );
+    this.shapeContainer = new ShapeFilter(this.data.shape).render(this.element);
+    this.colorContainer = new ColorFilter(this.data.color).render(this.element);
+    this.sizeContainer = new SizeFilter(this.data.size).render(this.element);
+    this.favoriteContainer = new FavoriteFilter().render(this.element);
 
-    new Title('h3', ['controls__subtitle'], 'Shape:').render(
-      this.shapeContainer
-    );
-    this.data.shape.forEach((item) => {
-      this.button = new BaseElement('button', [
-        'shape__button',
-        `shape__button_${item}`,
-      ]).render(this.shapeContainer);
-      this.button.dataset.filter = `shape-${item}`;
-    });
-
-    this.colorContainer = new BaseElement('div', ['color']).render(
-      this.element
-    );
-    new Title('h3', ['controls__subtitle'], 'Color:').render(
-      this.colorContainer
-    );
-    this.data.color.forEach((item) => {
-      this.button = new BaseElement('button', [
-        'color__button',
-        `color__button_${item}`,
-      ]).render(this.colorContainer);
-      this.button.dataset.filter = `color-${item}`;
-    });
-
-    this.sizeContainer = new BaseElement('div', ['size']).render(this.element);
-    new Title('h3', ['controls__subtitle'], 'Size:').render(this.sizeContainer);
-    this.data.size.forEach((item) => {
-      this.button = new BaseElement('button', [
-        'size__button',
-        `size__button_${item}`,
-      ]).render(this.sizeContainer);
-      this.button.dataset.filter = `size-${item}`;
-    });
-
-    this.favoriteContainer = new BaseElement('div', ['favorite']).render(
-      this.element
-    );
-    new Title('h3', ['controls__subtitle'], 'Favorite:').render(
-      this.favoriteContainer
-    );
-    this.checkboxContainer = new BaseElement('div', [
-      'favorite__container',
-    ]).render(this.favoriteContainer);
-
-    this.checkbox = new BaseElement('input', ['favorite__button']).render(
-      this.checkboxContainer
-    );
-    this.checkbox.setAttribute('type', 'checkbox');
-    this.checkbox.setAttribute('id', 'checkbox');
-    this.lable = new BaseElement('label', ['favorite__label']).render(
-      this.checkboxContainer
-    );
-    this.lable.setAttribute('for', 'checkbox');
-    this.selectFilter();
+    this.selectFilters();
   }
 
   getToysData() {
@@ -111,27 +63,62 @@ class ValueFilters extends BaseElement {
     return filterCategories;
   }
 
-  selectFilter() {
+  selectFilters() {
     this.element.addEventListener('click', (event) => {
-      // console.log(this.data);
       const target = <HTMLElement>event.target;
-
       if (target.tagName !== 'BUTTON') return false;
 
       const buttonElement = target.dataset['filter'];
       const [filterCategory, filterName] = buttonElement!.split('-');
 
       if (target.classList.contains(`${filterCategory}__button_active`)) {
-        this.filter(filterCategory, filterName, false);
-
         target.classList.remove(`${filterCategory}__button_active`);
+        switch (filterCategory) {
+          case 'shape':
+            this.removeSelectedFilterValue(this.selectedShapes, filterName);
+            console.log(this.selectedShapes);
+            break;
+          case 'color':
+            this.removeSelectedFilterValue(this.selectedColors, filterName);
+            console.log(this.selectedColors);
+            break;
+          case 'size':
+            this.removeSelectedFilterValue(this.selectedSize, filterName);
+            console.log(this.selectedSize);
+            break;
+          default:
+            break;
+        }
+        this.filter();
       } else {
-        this.filter(filterCategory, filterName, true);
         target.classList.add(`${filterCategory}__button_active`);
+        switch (filterCategory) {
+          case 'shape':
+            this.addSelectedFilterValue(this.selectedShapes, filterName);
+            console.log(this.selectedShapes);
+            break;
+          case 'color':
+            this.addSelectedFilterValue(this.selectedColors, filterName);
+            console.log(this.selectedColors);
+            break;
+          case 'size':
+            this.addSelectedFilterValue(this.selectedSize, filterName);
+            console.log(this.selectedSize);
+            break;
+          default:
+            break;
+        }
+        this.filter();
       }
-
-      // console.log(filterCategory, filterName);
     });
+  }
+
+  addSelectedFilterValue(filterSet: Set<string>, name: string) {
+    filterSet.add(name);
+  }
+
+  removeSelectedFilterValue(filterSet: Set<string>, name: string) {
+    filterSet.delete(name);
   }
 }
 

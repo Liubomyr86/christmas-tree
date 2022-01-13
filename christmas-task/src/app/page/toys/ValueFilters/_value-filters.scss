@@ -1,193 +1,193 @@
-@import '../../../../sass/abstracts/placeholders';
-@import '../../../../sass/abstracts/constants';
+// @import '../../../../sass/abstracts/placeholders';
+// @import '../../../../sass/abstracts/constants';
 
-.shape,
-.color,
-.size,
-.favorite {
-  display: flex;
-  align-items: center;
-}
+// .shape,
+// .color,
+// .size,
+// .favorite {
+//   display: flex;
+//   align-items: center;
+// }
 
-.shape {
-  &__button {
-    position: relative;
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    margin: 6px 6px;
-    border: 0;
-    outline: 0;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center center;
-    cursor: pointer;
-    -webkit-mask-size: cover;
-    @extend %transition;
+// .shape {
+//   &__button {
+//     position: relative;
+//     display: inline-block;
+//     width: 40px;
+//     height: 40px;
+//     margin: 6px 6px;
+//     border: 0;
+//     outline: 0;
+//     background-size: contain;
+//     background-repeat: no-repeat;
+//     background-position: center center;
+//     cursor: pointer;
+//     -webkit-mask-size: cover;
+//     @extend %transition;
 
-    &_active {
-      background-color: var(--color-filter-button-active);
-    }
+//     &_active {
+//       background-color: var(--color-filter-button-active);
+//     }
 
-    &:hover {
-      background-color: var(--color-filter-button-hover);
-    }
+//     &:hover {
+//       background-color: var(--color-filter-button-hover);
+//     }
 
-    &_ball {
-      margin-left: 20px;
-      -webkit-mask-image: url('../../../../assets/svg/ball.svg');
-    }
+//     &_ball {
+//       margin-left: 20px;
+//       -webkit-mask-image: url('../../../../assets/svg/ball.svg');
+//     }
 
-    &_figurine {
-      -webkit-mask-image: url('../../../../assets/svg/toy.svg');
-    }
+//     &_figurine {
+//       -webkit-mask-image: url('../../../../assets/svg/toy.svg');
+//     }
 
-    &_bell {
-      -webkit-mask-image: url('../../../../assets/svg/bell.svg');
-    }
+//     &_bell {
+//       -webkit-mask-image: url('../../../../assets/svg/bell.svg');
+//     }
 
-    &_cone {
-      -webkit-mask-image: url('../../../../assets/svg/cone.svg');
-    }
-    &_snowflake {
-      -webkit-mask-image: url('../../../../assets/svg/snowflake.svg');
-    }
-  }
-}
+//     &_cone {
+//       -webkit-mask-image: url('../../../../assets/svg/cone.svg');
+//     }
+//     &_snowflake {
+//       -webkit-mask-image: url('../../../../assets/svg/snowflake.svg');
+//     }
+//   }
+// }
 
-.color {
-  &__button {
-    position: relative;
-    width: 30px;
-    height: 30px;
-    margin: 15px 10px;
-    border: 1px solid var(--color-border);
-    border-radius: 5px;
-    outline: 0;
-    background-color: transparent;
-    cursor: pointer;
-    @extend %transition;
+// .color {
+//   &__button {
+//     position: relative;
+//     width: 30px;
+//     height: 30px;
+//     margin: 15px 10px;
+//     border: 1px solid var(--color-border);
+//     border-radius: 5px;
+//     outline: 0;
+//     background-color: transparent;
+//     cursor: pointer;
+//     @extend %transition;
 
-    &_active {
-      &::after {
-        content: '';
-        display: block;
-        position: absolute;
-        top: 5px;
-        left: 10px;
-        width: 10px;
-        height: 15px;
-        border: solid #fff;
-        border-width: 0 4px 4px 0;
-        transform: rotate(45deg);
-      }
-      &:nth-child(5)::after {
-        border-color: #666;
-      }
-    }
+//     &_active {
+//       &::after {
+//         content: '';
+//         display: block;
+//         position: absolute;
+//         top: 5px;
+//         left: 10px;
+//         width: 10px;
+//         height: 15px;
+//         border: solid #fff;
+//         border-width: 0 4px 4px 0;
+//         transform: rotate(45deg);
+//       }
+//       &:nth-child(5)::after {
+//         border-color: #666;
+//       }
+//     }
 
-    &_white {
-      background-color: var(--color-white);
-    }
+//     &_white {
+//       background-color: var(--color-white);
+//     }
 
-    &_yellow {
-      background-color: var(--color-yellow);
-    }
+//     &_yellow {
+//       background-color: var(--color-yellow);
+//     }
 
-    &_red {
-      background-color: var(--color-red);
-    }
+//     &_red {
+//       background-color: var(--color-red);
+//     }
 
-    &_blue {
-      background-color: var(--color-blue);
-    }
+//     &_blue {
+//       background-color: var(--color-blue);
+//     }
 
-    &_green {
-      background-color: var(--color-green);
-    }
-  }
-}
+//     &_green {
+//       background-color: var(--color-green);
+//     }
+//   }
+// }
 
-.size {
-  &__button {
-    position: relative;
-    margin: 5px 5px;
-    border: 0;
-    outline: 0;
-    -webkit-mask-image: url('../../../../assets/svg/ball.svg');
-    background-repeat: no-repeat;
-    background-position: center center;
-    cursor: pointer;
-    -webkit-mask-size: cover;
-    @extend %transition;
+// .size {
+//   &__button {
+//     position: relative;
+//     margin: 5px 5px;
+//     border: 0;
+//     outline: 0;
+//     -webkit-mask-image: url('../../../../assets/svg/ball.svg');
+//     background-repeat: no-repeat;
+//     background-position: center center;
+//     cursor: pointer;
+//     -webkit-mask-size: cover;
+//     @extend %transition;
 
-    &_active {
-      background-color: var(--color-filter-button-active);
-    }
+//     &_active {
+//       background-color: var(--color-filter-button-active);
+//     }
 
-    &:hover {
-      background-color: var(--color-filter-button-hover);
-    }
+//     &:hover {
+//       background-color: var(--color-filter-button-hover);
+//     }
 
-    &_large {
-      width: 50px;
-      height: 50px;
-    }
-    &_average {
-      width: 40px;
-      height: 40px;
-    }
-    &_small {
-      width: 32px;
-      height: 32px;
-    }
-  }
-}
+//     &_large {
+//       width: 50px;
+//       height: 50px;
+//     }
+//     &_average {
+//       width: 40px;
+//       height: 40px;
+//     }
+//     &_small {
+//       width: 32px;
+//       height: 32px;
+//     }
+//   }
+// }
 
-.favorite {
-  height: 60px;
-  margin: 0;
-  &__container {
-    display: flex;
-    align-items: center;
-    height: 60px;
-    margin: 0;
-  }
-  &__button {
-    width: initial;
-    height: initial;
-    display: none;
-    &:checked + .favorite__label {
-      background-color: var(--color-border);
-      border-color: var(--color-border);
-    }
+// .favorite {
+//   height: 60px;
+//   margin: 0;
+//   &__container {
+//     display: flex;
+//     align-items: center;
+//     height: 60px;
+//     margin: 0;
+//   }
+//   &__button {
+//     width: initial;
+//     height: initial;
+//     display: none;
+//     &:checked + .favorite__label {
+//       background-color: var(--color-border);
+//       border-color: var(--color-border);
+//     }
 
-    &:checked + .favorite__label::after {
-      content: '';
-      display: block;
-      position: absolute;
-      top: 5px;
-      left: 10px;
-      width: 10px;
-      height: 15px;
-      border: solid var(--color-white);
-      border-width: 0 4px 4px 0;
-      transform: rotate(45deg);
-    }
-  }
+//     &:checked + .favorite__label::after {
+//       content: '';
+//       display: block;
+//       position: absolute;
+//       top: 5px;
+//       left: 10px;
+//       width: 10px;
+//       height: 15px;
+//       border: solid var(--color-white);
+//       border-width: 0 4px 4px 0;
+//       transform: rotate(45deg);
+//     }
+//   }
 
-  &__label {
-    position: relative;
-    display: flex;
-    width: 30px;
-    height: 30px;
-    backdrop-filter: blur(6px);
-    border: 1px solid var(--color-border);
-    border-radius: 5px;
-    padding: 0;
-    margin: 0;
-    margin-left: 20px;
-    cursor: pointer;
-    transition: 0.5s;
-  }
-}
+//   &__label {
+//     position: relative;
+//     display: flex;
+//     width: 30px;
+//     height: 30px;
+//     backdrop-filter: blur(6px);
+//     border: 1px solid var(--color-border);
+//     border-radius: 5px;
+//     padding: 0;
+//     margin: 0;
+//     margin-left: 20px;
+//     cursor: pointer;
+//     transition: 0.5s;
+//   }
+// }

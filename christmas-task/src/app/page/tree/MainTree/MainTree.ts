@@ -35,7 +35,7 @@ class MainTree extends BaseElement {
     draggedEl!.dataset.location = '2';
     draggedEl!.style.top = `${event.clientY - this.dragY - draggedElHeight}px`;
     draggedEl!.style.left = `${event.clientX - this.dragX}px`;
-    (<HTMLElement>event.target).append(draggedEl!);
+    this.element.append(draggedEl!);
   }
 
   handleOverDrop() {

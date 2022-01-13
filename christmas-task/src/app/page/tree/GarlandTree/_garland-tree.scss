@@ -7,6 +7,14 @@
     width: 500px;
     height: 714px;
     pointer-events: none;
+
+    &.blue > li {
+      animation-name: blue;
+    }
+
+    &.red > li {
+      animation-name: red;
+    }
   }
 
   &__lamp {

@@ -1,0 +1,51 @@
+@import '../../../../../sass/abstracts/placeholders';
+@import '../../../../../sass/abstracts/constants';
+
+.shape {
+  display: flex;
+  align-items: center;
+
+  &__button {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    margin: 6px 6px;
+    border: 0;
+    outline: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    cursor: pointer;
+    -webkit-mask-size: cover;
+    @extend %transition;
+
+    &_active {
+      background-color: var(--color-filter-button-active);
+    }
+
+    &:hover {
+      background-color: var(--color-filter-button-hover);
+    }
+
+    &_ball {
+      margin-left: 20px;
+      -webkit-mask-image: url('../../../../../assets/svg/ball.svg');
+    }
+
+    &_figurine {
+      -webkit-mask-image: url('../../../../../assets/svg/toy.svg');
+    }
+
+    &_bell {
+      -webkit-mask-image: url('../../../../../assets/svg/bell.svg');
+    }
+
+    &_cone {
+      -webkit-mask-image: url('../../../../../assets/svg/cone.svg');
+    }
+    &_snowflake {
+      -webkit-mask-image: url('../../../../../assets/svg/snowflake.svg');
+    }
+  }
+}

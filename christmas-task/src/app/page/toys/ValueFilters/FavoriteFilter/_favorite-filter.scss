@@ -1,0 +1,52 @@
+@import '../../../../../sass/abstracts/placeholders';
+@import '../../../../../sass/abstracts/constants';
+
+.favorite {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  margin: 0;
+  &__container {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    margin: 0;
+  }
+  &__button {
+    width: initial;
+    height: initial;
+    display: none;
+    &:checked + .favorite__label {
+      background-color: var(--color-border);
+      border-color: var(--color-border);
+    }
+
+    &:checked + .favorite__label::after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 5px;
+      left: 10px;
+      width: 10px;
+      height: 15px;
+      border: solid var(--color-white);
+      border-width: 0 4px 4px 0;
+      transform: rotate(45deg);
+    }
+  }
+
+  &__label {
+    position: relative;
+    display: flex;
+    width: 30px;
+    height: 30px;
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 0;
+    margin: 0;
+    margin-left: 20px;
+    cursor: pointer;
+    transition: 0.5s;
+  }
+}
