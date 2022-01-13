@@ -1,7 +1,7 @@
 import 'nouislider/dist/nouislider.css';
 import './_range-filters.scss';
 
-import noUiSlider from 'nouislider';
+import noUiSlider, { target } from 'nouislider';
 import BaseElement from '../../../components/BaseElement';
 import Title from '../../../components/Title';
 
@@ -13,9 +13,26 @@ class RangeFilters extends BaseElement {
   yearRangeContainer: HTMLElement;
   countSliderElement: HTMLElement;
   yearSliderElement: HTMLElement;
+  countOutputLower: HTMLElement;
+  countOutputUpper: HTMLElement;
+  yearOutputLower: HTMLElement;
+  yearOutputUpper: HTMLElement;
+  private countValues: number[] = [1, 12];
+  private yearValues: number[] = [1950, 2020];
 
-  constructor() {
+  checkCountValues() {
+    return this.countValues;
+  }
+
+  checkYearValues() {
+    return this.yearValues;
+  }
+
+  filter: () => void;
+
+  constructor(setFilters: () => void) {
     super('div', ['range']);
+    this.filter = setFilters;
     this.title = new Title('h2', ['controls__title'], 'RANGE FILTERS').render(
       this.element
     );
@@ -29,16 +46,20 @@ class RangeFilters extends BaseElement {
     this.countRangeContainer = new BaseElement('div', [
       'count__range-container',
     ]).render(this.countContainer);
-    new BaseElement('output', ['range__output'], '1').render(
-      this.countRangeContainer
-    );
+    this.countOutputLower = new BaseElement(
+      'output',
+      ['range__output'],
+      '1'
+    ).render(this.countRangeContainer);
     this.countSliderElement = new BaseElement('div', ['count__slider']).render(
       this.countRangeContainer
     );
     this.countSliderElement.id = 'count-slider';
-    new BaseElement('output', ['range__output'], '12').render(
-      this.countRangeContainer
-    );
+    this.countOutputUpper = new BaseElement(
+      'output',
+      ['range__output'],
+      '12'
+    ).render(this.countRangeContainer);
 
     this.yearContainer = new BaseElement('div', ['year']).render(this.element);
     new Title('h3', ['controls__subtitle'], 'Purchase year:').render(
@@ -47,19 +68,25 @@ class RangeFilters extends BaseElement {
     this.yearRangeContainer = new BaseElement('div', [
       'year__range-container',
     ]).render(this.yearContainer);
-    new BaseElement('output', ['range__output'], '1940').render(
-      this.yearRangeContainer
-    );
+    this.yearOutputLower = new BaseElement(
+      'output',
+      ['range__output'],
+      '1940'
+    ).render(this.yearRangeContainer);
 
     this.yearSliderElement = new BaseElement('div', ['year__slider']).render(
       this.yearRangeContainer
     );
-    new BaseElement('output', ['range__output'], '2020').render(
-      this.yearRangeContainer
-    );
+    this.yearOutputUpper = new BaseElement(
+      'output',
+      ['range__output'],
+      '2020'
+    ).render(this.yearRangeContainer);
 
     this.countSlider();
     this.yearSlider();
+    this.readCountValue(this.countValues, this.filter);
+    this.readYearValue(this.yearValues, this.filter);
   }
 
   countSlider() {
@@ -86,7 +113,6 @@ class RangeFilters extends BaseElement {
   }
 
   yearSlider() {
-    // const snapSlider = document.getElementById('count-slider');
     noUiSlider.create(this.yearSliderElement, {
       start: [1950, 2020],
       snap: true,
@@ -103,6 +129,39 @@ class RangeFilters extends BaseElement {
         max: 2020,
       },
     });
+  }
+
+  readCountValue(arr: number[], callback: () => void) {
+    const skipValues = [this.countOutputLower, this.countOutputUpper];
+    (<target>this.countSliderElement).noUiSlider!.on(
+      'update',
+      function (values, handle) {
+        let [min, max] = values;
+        min = +min;
+        max = +max;
+        arr[0] = min;
+        arr[1] = max;
+        callback();
+        values = [min, max];
+        skipValues[handle].innerHTML = values[handle].toString();
+      }
+    );
+  }
+  readYearValue(arr: number[], callback: () => void) {
+    const skipValues = [this.yearOutputLower, this.yearOutputUpper];
+    (<target>this.yearSliderElement).noUiSlider!.on(
+      'update',
+      function (values, handle) {
+        let [min, max] = values;
+        min = +min;
+        max = +max;
+        arr[0] = min;
+        arr[1] = max;
+        callback();
+        values = [min, max];
+        skipValues[handle].innerHTML = values[handle].toString();
+      }
+    );
   }
 }
 

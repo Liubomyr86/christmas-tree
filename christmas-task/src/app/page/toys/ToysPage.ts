@@ -18,7 +18,7 @@ class ToysPage extends BaseElement {
 
   private valueFilters: ValueFilters;
   private searchElement: Search;
-  private rangeFilters: HTMLElement;
+  private rangeFilters: RangeFilters;
   private sorting: HTMLElement;
   private resetButton: HTMLElement;
 
@@ -42,7 +42,8 @@ class ToysPage extends BaseElement {
     this.searchElement.render(this.controls);
     this.valueFilters = new ValueFilters(this.setValueFilters.bind(this));
     this.valueFilters.render(this.controls);
-    this.rangeFilters = new RangeFilters().render(this.controls);
+    this.rangeFilters = new RangeFilters(this.setValueFilters.bind(this));
+    this.rangeFilters.render(this.controls);
     this.sorting = new Sorting().render(this.controls);
 
     this.resetButton = new BaseElement(
@@ -70,7 +71,11 @@ class ToysPage extends BaseElement {
             .includes(this.searchElement.checkSearchValue()) &&
           this.valueFilters.checkShapeIsSelected(item.data.shape) &&
           this.valueFilters.checkColorIsSelected(item.data.color) &&
-          this.valueFilters.checkSizeIsSelected(item.data.size)
+          this.valueFilters.checkSizeIsSelected(item.data.size) &&
+          +item.data.amount >= this.rangeFilters.checkCountValues()[0] &&
+          +item.data.amount <= this.rangeFilters.checkCountValues()[1] &&
+          +item.data.year >= this.rangeFilters.checkYearValues()[0] &&
+          +item.data.year <= this.rangeFilters.checkYearValues()[1]
         );
       })
       .forEach((item) => {

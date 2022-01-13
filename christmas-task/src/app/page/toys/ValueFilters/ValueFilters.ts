@@ -76,15 +76,12 @@ class ValueFilters extends BaseElement {
         switch (filterCategory) {
           case 'shape':
             this.removeSelectedFilterValue(this.selectedShapes, filterName);
-            console.log(this.selectedShapes);
             break;
           case 'color':
             this.removeSelectedFilterValue(this.selectedColors, filterName);
-            console.log(this.selectedColors);
             break;
           case 'size':
             this.removeSelectedFilterValue(this.selectedSize, filterName);
-            console.log(this.selectedSize);
             break;
           default:
             break;
@@ -95,15 +92,12 @@ class ValueFilters extends BaseElement {
         switch (filterCategory) {
           case 'shape':
             this.addSelectedFilterValue(this.selectedShapes, filterName);
-            console.log(this.selectedShapes);
             break;
           case 'color':
             this.addSelectedFilterValue(this.selectedColors, filterName);
-            console.log(this.selectedColors);
             break;
           case 'size':
             this.addSelectedFilterValue(this.selectedSize, filterName);
-            console.log(this.selectedSize);
             break;
           default:
             break;
