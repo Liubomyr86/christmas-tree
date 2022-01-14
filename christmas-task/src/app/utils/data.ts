@@ -674,7 +674,7 @@ const data = [
   {
     num: '49',
     nameRu: 'Снежинка с бирюзой',
-    name: 'Еurquoise snowflake',
+    name: 'Turquoise snowflake',
     amount: '4',
     year: '1980',
     shapeRu: 'снежинка',

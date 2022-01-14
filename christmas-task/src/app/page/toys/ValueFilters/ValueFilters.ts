@@ -2,12 +2,11 @@ import './_value-filters.scss';
 
 import BaseElement from '../../../components/BaseElement';
 import Title from '../../../components/Title';
-import { IFilterData, IToyCardData } from '../../../utils/alias';
+import { IFilterData } from '../../../utils/alias';
 import data from '../../../utils/data';
 import ShapeFilter from './ShapeFilter/ShapeFilter';
 import ColorFilter from './ColorFilter/ColorFilter';
 import SizeFilter from './SizeFilter/SizeFilter';
-import FavoriteFilter from './FavoriteFilter/FavoriteFilter';
 
 class ValueFilters extends BaseElement {
   data: IFilterData;
@@ -16,7 +15,6 @@ class ValueFilters extends BaseElement {
   shapeContainer: HTMLElement;
   colorContainer: HTMLElement;
   sizeContainer: HTMLElement;
-  favoriteContainer: HTMLElement;
   filter: () => void;
 
   private selectedShapes = new Set<string>();
@@ -48,7 +46,6 @@ class ValueFilters extends BaseElement {
     this.shapeContainer = new ShapeFilter(this.data.shape).render(this.element);
     this.colorContainer = new ColorFilter(this.data.color).render(this.element);
     this.sizeContainer = new SizeFilter(this.data.size).render(this.element);
-    this.favoriteContainer = new FavoriteFilter().render(this.element);
 
     this.selectFilters();
   }

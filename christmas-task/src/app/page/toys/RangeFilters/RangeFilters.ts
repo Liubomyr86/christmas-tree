@@ -18,7 +18,7 @@ class RangeFilters extends BaseElement {
   yearOutputLower: HTMLElement;
   yearOutputUpper: HTMLElement;
   private countValues: number[] = [1, 12];
-  private yearValues: number[] = [1950, 2020];
+  private yearValues: number[] = [1940, 2020];
 
   checkCountValues() {
     return this.countValues;
@@ -114,18 +114,19 @@ class RangeFilters extends BaseElement {
 
   yearSlider() {
     noUiSlider.create(this.yearSliderElement, {
-      start: [1950, 2020],
+      start: [1940, 2020],
       snap: true,
       connect: true,
       step: 10,
       range: {
-        min: 1950,
-        '16.67%': 1960,
-        '33.34%': 1970,
-        '37.5%': 1980,
-        '50.01%': 1990,
-        '66.68%': 2000,
-        '83.35%': 2010,
+        min: 1940,
+        '12.5': 1950,
+        '25%': 1960,
+        '37.5%': 1970,
+        '50%': 1980,
+        '62.5%': 1990,
+        '75%': 2000,
+        '87.5%': 2010,
         max: 2020,
       },
     });
