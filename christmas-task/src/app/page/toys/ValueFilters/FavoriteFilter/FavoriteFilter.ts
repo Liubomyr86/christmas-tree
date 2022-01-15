@@ -9,9 +9,9 @@ class FavoriteFilter extends BaseElement {
 
   setFilters: () => void;
 
-  private favoriteValue: boolean[] = [true, false];
-  checkFavoriteValue(value: boolean) {
-    return this.favoriteValue.includes(value);
+  private favoriteValue: boolean = false;
+  checkFavoriteValue(value: boolean): boolean {
+    return this.favoriteValue === value || !this.favoriteValue;
   }
 
   constructor(setFilters: () => void) {
@@ -37,17 +37,21 @@ class FavoriteFilter extends BaseElement {
   }
 
   checkFavoriteToys() {
-    console.log((<HTMLInputElement>this.checkbox).checked);
-
     this.lable.addEventListener('click', () => {
       if (!(<HTMLInputElement>this.checkbox).checked) {
-        this.favoriteValue.pop();
+        this.favoriteValue = !(<HTMLInputElement>this.checkbox).checked;
         this.setFilters();
       } else {
-        this.favoriteValue.push(false);
+        this.favoriteValue = !(<HTMLInputElement>this.checkbox).checked;
+
         this.setFilters();
       }
     });
+  }
+
+  resetFavoritButton() {
+    this.favoriteValue = false;
+    (<HTMLInputElement>this.checkbox).checked = false;
   }
 }
 

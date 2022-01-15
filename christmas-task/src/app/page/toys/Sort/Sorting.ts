@@ -41,25 +41,21 @@ class Sorting extends BaseElement {
 
       switch (target.value) {
         case 'sort-name-max':
-          console.log(target.value);
           this.sortType = target.value;
           this.sortFilter();
           break;
 
         case 'sort-name-min':
-          console.log(target.value);
           this.sortType = target.value;
           this.sortFilter();
           break;
 
         case 'sort-year-max':
-          console.log(target.value);
           this.sortType = target.value;
           this.sortFilter();
           break;
 
         case 'sort-year-min':
-          console.log(target.value);
           this.sortType = target.value;
           this.sortFilter();
           break;

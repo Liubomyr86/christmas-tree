@@ -28,6 +28,14 @@ class RangeFilters extends BaseElement {
     return this.yearValues;
   }
 
+  resetCountValues() {
+    (<target>this.countSliderElement).noUiSlider!.reset();
+  }
+
+  resetYearValues() {
+    (<target>this.yearSliderElement).noUiSlider!.reset();
+  }
+
   filter: () => void;
 
   constructor(setFilters: () => void) {

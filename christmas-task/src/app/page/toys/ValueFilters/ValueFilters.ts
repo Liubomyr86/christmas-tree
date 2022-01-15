@@ -33,6 +33,33 @@ class ValueFilters extends BaseElement {
     return this.selectedSize.size === 0 || this.selectedSize.has(size);
   }
 
+  clearSet() {
+    this.selectedShapes.clear();
+    this.selectedColors.clear();
+    this.selectedSize.clear();
+  }
+
+  resetStyles() {
+    const shapes: Element[] = Array.from(this.shapeContainer.children);
+    for (let shape of shapes) {
+      if (shape.className.includes('shape__button_active')) {
+        shape.classList.remove('shape__button_active');
+      }
+    }
+    const colors: Element[] = Array.from(this.colorContainer.children);
+    for (let color of colors) {
+      if (color.className.includes('color__button_active')) {
+        color.classList.remove('color__button_active');
+      }
+    }
+    const sizes: Element[] = Array.from(this.sizeContainer.children);
+    for (let size of sizes) {
+      if (size.className.includes('size__button_active')) {
+        size.classList.remove('size__button_active');
+      }
+    }
+  }
+
   constructor(pushDatasetValueFilters: () => void) {
     super('div', ['filters']);
     this.filter = pushDatasetValueFilters;

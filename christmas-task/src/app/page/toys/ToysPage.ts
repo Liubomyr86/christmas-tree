@@ -19,7 +19,7 @@ class ToysPage extends BaseElement {
 
   private valueFilters: ValueFilters;
   private searchElement: Search;
-  private favoriteContainer: FavoriteFilter;
+  private favoriteFilter: FavoriteFilter;
   private rangeFilters: RangeFilters;
   private sorting: Sorting;
   private resetButton: HTMLElement;
@@ -44,10 +44,8 @@ class ToysPage extends BaseElement {
     this.searchElement.render(this.controls);
     this.valueFilters = new ValueFilters(this.setValueFilters.bind(this));
     this.valueFilters.render(this.controls);
-    this.favoriteContainer = new FavoriteFilter(
-      this.setValueFilters.bind(this)
-    );
-    this.favoriteContainer.render(this.controls);
+    this.favoriteFilter = new FavoriteFilter(this.setValueFilters.bind(this));
+    this.favoriteFilter.render(this.controls);
 
     this.rangeFilters = new RangeFilters(this.setValueFilters.bind(this));
     this.rangeFilters.render(this.controls);
@@ -62,6 +60,7 @@ class ToysPage extends BaseElement {
 
     this.toyCards = data.map((item) => new ToyCard(item));
     this.setValueFilters();
+    this.resetFiltersValues();
   }
 
   getData() {
@@ -85,64 +84,68 @@ class ToysPage extends BaseElement {
           +item.data.amount <= this.rangeFilters.checkCountValues()[1] &&
           +item.data.year >= this.rangeFilters.checkYearValues()[0] &&
           +item.data.year <= this.rangeFilters.checkYearValues()[1] &&
-          this.favoriteContainer.checkFavoriteValue(item.data.favorite)
+          this.favoriteFilter.checkFavoriteValue(item.data.favorite)
         );
       })
-      .sort(this.sortType('sort-name-max'))
+      .sort(this.sortType.bind(this))
       .forEach((item) => {
         this.cardsContainer.append(item.element);
       });
   }
 
-  sortType(sort: string): ((a: ToyCard, b: ToyCard) => number) | undefined {
-    switch (sort) {
+  sortType(a: ToyCard, b: ToyCard): number {
+    switch (this.sorting.checkSortType()) {
       case 'sort-name-max':
-        return (a: ToyCard, b: ToyCard) => {
-          if (a.data.name > b.data.name) {
-            return 1;
-          }
-          if (a.data.name < b.data.name) {
-            return -1;
-          }
-          return 0;
-        };
+        if (a.data.name > b.data.name) {
+          return 1;
+        }
+        if (a.data.name < b.data.name) {
+          return -1;
+        }
+        return 0;
 
       case 'sort-name-min':
-        return (a: ToyCard, b: ToyCard) => {
-          if (a.data.name > b.data.name) {
-            return -1;
-          }
-          if (a.data.name < b.data.name) {
-            return 1;
-          }
-          return 0;
-        };
+        if (a.data.name > b.data.name) {
+          return -1;
+        }
+        if (a.data.name < b.data.name) {
+          return 1;
+        }
+        return 0;
 
       case 'sort-year-max':
-        return (a: ToyCard, b: ToyCard) => {
-          if (a.data.year < b.data.year) {
-            return 1;
-          }
-          if (a.data.year > b.data.year) {
-            return -1;
-          }
-          return 0;
-        };
-
-      case 'sort-year-min':
-        return (a: ToyCard, b: ToyCard) => {
-          if (a.data.year < b.data.year) {
-            return -1;
-          }
-          if (a.data.year > b.data.year) {
-            return 1;
-          }
-          return 0;
-        };
+        if (a.data.year < b.data.year) {
+          return 1;
+        }
+        if (a.data.year > b.data.year) {
+          return -1;
+        }
+        return 0;
 
       default:
-        break;
+        if (a.data.year < b.data.year) {
+          return -1;
+        }
+        if (a.data.year > b.data.year) {
+          return 1;
+        }
+        return 0;
     }
+  }
+
+  resetFiltersValues() {
+    this.resetButton.addEventListener('click', () => {
+      this.cardsContainer.innerHTML = '';
+      this.searchElement.resetSearchValue();
+      this.valueFilters.clearSet();
+      this.valueFilters.resetStyles();
+      this.favoriteFilter.resetFavoritButton();
+      this.rangeFilters.resetCountValues();
+      this.rangeFilters.resetYearValues();
+      this.toyCards
+        .sort(this.sortType.bind(this))
+        .forEach((item) => this.cardsContainer.append(item.element));
+    });
   }
 }
 export default ToysPage;

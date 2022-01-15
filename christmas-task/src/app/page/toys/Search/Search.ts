@@ -8,6 +8,11 @@ class Search extends BaseElement {
     return this.searchValue;
   }
 
+  resetSearchValue() {
+    this.searchValue = '';
+    return ((<HTMLInputElement>this.element).value = '');
+  }
+
   constructor(setData: () => void) {
     super('input', ['search']);
     this.element.setAttribute('type', 'search');
