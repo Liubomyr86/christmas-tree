@@ -49,7 +49,7 @@
 .ribbon {
   position: absolute;
   width: 85px;
-  height: 50px;
+  height: 40px;
   top: 200px;
   left: -10px;
   background-color: var(--color-ribbon);
@@ -68,16 +68,16 @@
     content: '';
     position: absolute;
     top: 0;
-    right: -50px;
-    border-left: 25px solid var(--color-ribbon);
-    border-right: 25px solid transparent;
-    border-top: 25px solid transparent;
-    border-bottom: 25px solid transparent;
+    right: -40px;
+    border-left: 20px solid var(--color-ribbon);
+    border-right: 20px solid transparent;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
   }
   &_checked {
     background-color: var(--color-filter-button-active);
     &::after {
-      border-left: 25px solid var(--color-filter-button-active);
+      border-left: 20px solid var(--color-filter-button-active);
     }
   }
 }

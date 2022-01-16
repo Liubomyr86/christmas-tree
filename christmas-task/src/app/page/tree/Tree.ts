@@ -26,7 +26,7 @@ class TreePage extends BaseElement {
   chooseBackground: HTMLElement;
   chooseGarland: HTMLElement;
   garlandButtonsContainer: HTMLElement;
-  toggleGarland: HTMLElement | undefined;
+  toggleGarland: GarlandToggle;
   treeToysContainer: HTMLElement;
   favotiteToysData: IToyCardData[] = [];
   mainTreeContainer: HTMLElement;
@@ -41,6 +41,7 @@ class TreePage extends BaseElement {
   dragY = 0;
   snowflaksButton: HTMLElement;
   tree: MainTree;
+  garland: GarlandTree;
 
   constructor() {
     super('main', ['main']);
@@ -97,9 +98,9 @@ class TreePage extends BaseElement {
     this.garlandTreeContainer = this.element.querySelector('.tree__garland')!;
     this.snowflakesContainer = this.element.querySelector('.tree__snowflakes')!;
 
-    this.tree = new MainTree(this.getCoordinatesForToy.bind(this));
-
     this.snowflakes = new Snowflakes(50);
+    this.garland = new GarlandTree();
+    this.tree = new MainTree(this.getCoordinatesForToy.bind(this));
 
     this.playSound = new PlaySound().render(this.audioSnowflaks);
     this.snowflaksButton = new SnowflakeButton(
@@ -121,11 +122,12 @@ class TreePage extends BaseElement {
       )
     );
     this.toggleGarland = new GarlandToggle(
-      this.isChecked,
-      this.garlandOnOff.bind(this)
-    ).render(this.chooseGarland);
+      this.garland.swithGarland.bind(this.garland)
+    );
+    this.toggleGarland.render(this.chooseGarland);
 
     this.snowflakes.render(this.snowflakesContainer);
+    this.garlandTreeContainer.append(this.garland.element);
     this.mainTree.append(this.tree.element);
 
     this.favotiteToysData.forEach((item) => {
@@ -171,24 +173,9 @@ class TreePage extends BaseElement {
   }
 
   garlandOn(color: string, flag: boolean) {
-    this.garlandColor = color;
-    this.isChecked = flag;
-    this.garlandTreeContainer!.innerHTML = '';
-    this.garlandTreeContainer.append(
-      new GarlandTree(this.garlandColor, this.isChecked).element
-    );
-    this.chooseGarland.removeChild(this.chooseGarland.lastChild!);
-    this.chooseGarland.append(
-      new GarlandToggle(this.isChecked, this.garlandOnOff.bind(this)).element
-    );
-  }
-
-  garlandOnOff(flag: boolean) {
-    this.isChecked = flag;
-    this.garlandTreeContainer!.innerHTML = '';
-    this.garlandTreeContainer.append(
-      new GarlandTree(this.garlandColor, this.isChecked).element
-    );
+    this.garland.swithGarland(color, flag);
+    this.toggleGarland.garlandColor = color;
+    this.toggleGarland.toggleOn(flag);
   }
 }
 

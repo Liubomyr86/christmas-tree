@@ -4,25 +4,30 @@ import BaseElement from '../../../components/BaseElement';
 
 class GarlandToggle extends BaseElement {
   input: HTMLInputElement;
-  setData: (flag: boolean) => void;
 
-  constructor(flag: boolean, setData: (flag: boolean) => void) {
+  public garlandColor: string = '';
+
+  visibilityGarland: (color: string, flag: boolean) => void;
+
+  constructor(callback: (color: string, flag: boolean) => void) {
     super('div', ['tree__garland-toggle']);
 
-    this.setData = setData;
+    this.visibilityGarland = callback;
     this.element.innerHTML = `
       <input class="toggle" type="checkbox" id="garland-toggle" name="garland-toggle">
       <label class="switch" for="garland-toggle">on</label>
     `;
     this.input = this.element.querySelector('.toggle')!;
-    this.input.checked = flag;
     this.changeToggle();
+  }
+
+  toggleOn(flag: boolean) {
+    this.input.checked = flag;
   }
 
   changeToggle() {
     this.element.addEventListener('click', () => {
-      const flag = this.input.checked;
-      this.setData(flag);
+      this.visibilityGarland(this.garlandColor, this.input.checked);
     });
   }
 }

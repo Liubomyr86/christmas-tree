@@ -7,6 +7,8 @@
     width: 500px;
     height: 714px;
     pointer-events: none;
+    visibility: hidden;
+    opacity: 0;
 
     &.blue > li {
       animation-name: blue;
@@ -63,38 +65,12 @@
     &:nth-child(3n + 1) {
       animation-duration: 1.4s;
     }
-
-    // &_red {
-    //   animation-name: red;
-    // }
-
-    // &_yellow {
-    //   animation-name: yellow;
-    // }
-
-    // &_green {
-    //   animation-name: green;
-    // }
-
-    // &_blue {
-    //   animation-name: blue;
-    // }
-
-    // &_multicolor {
-    //   &:nth-child(1n + 1) {
-    //     animation-name: red;
-    //   }
-    //   &:nth-child(2n + 2) {
-    //     animation-name: green;
-    //   }
-    //   &:nth-child(3n + 3) {
-    //     animation-name: yellow;
-    //   }
-    //   &:nth-child(4n + 4) {
-    //     animation-name: blue;
-    //   }
-    // }
   }
+}
+
+.visible {
+  visibility: visible;
+  opacity: 1;
 }
 
 @keyframes green {
