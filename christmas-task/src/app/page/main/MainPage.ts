@@ -3,9 +3,13 @@ import './_main-page.scss';
 import BaseElement from '../../components/BaseElement';
 
 class MainPage extends BaseElement {
-  constructor() {
+  button: HTMLElement;
+  changeLinkStyle: () => void;
+
+  constructor(callback: () => void) {
     super('main', ['main']);
 
+    this.changeLinkStyle = callback;
     this.element.innerHTML = `
     <div class="first-page container">
       <div class="ball ball_big"></div>
@@ -21,6 +25,14 @@ class MainPage extends BaseElement {
       <a class="first-page__button" href="#toys-page">Start</a>
     </div>
     `;
+    this.button = this.element.querySelector('.first-page__button')!;
+    this.setToysActivLink();
+  }
+
+  setToysActivLink() {
+    this.button.addEventListener('click', () => {
+      this.changeLinkStyle();
+    });
   }
 }
 

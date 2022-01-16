@@ -13,6 +13,7 @@
   background-color: var(--color-background-container);
   backdrop-filter: blur(6px);
   cursor: pointer;
+  box-shadow: 0 0 10px rgba(150 150 150 /0.5);
 
   &__title {
     width: 100%;
@@ -47,10 +48,36 @@
 
 .ribbon {
   position: absolute;
-  width: 20px;
-  height: 20px;
-  background-color: lightcoral;
+  width: 85px;
+  height: 50px;
+  top: 200px;
+  left: -10px;
+  background-color: var(--color-ribbon);
+  &::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid #14455b;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid #14455b;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -50px;
+    border-left: 25px solid var(--color-ribbon);
+    border-right: 25px solid transparent;
+    border-top: 25px solid transparent;
+    border-bottom: 25px solid transparent;
+  }
   &_checked {
-    background-color: lightgreen;
+    background-color: var(--color-filter-button-active);
+    &::after {
+      border-left: 25px solid var(--color-filter-button-active);
+    }
   }
 }

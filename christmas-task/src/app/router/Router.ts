@@ -1,20 +1,23 @@
+import Header from '../components/Header/Header';
 import MainPage from '../page/main/MainPage';
 import ToysPage from '../page/toys/ToysPage';
 import TreePage from '../page/tree/Tree';
 
+const hearder = new Header();
+
 const DEFAULT_ROUTE: { name: string; component: () => void } = {
   name: 'default',
-  component: () => new MainPage().element,
+  component: () => new MainPage(hearder.changeLinkStyle).element,
 };
 
 const ROUTING: { name: string; component: () => void }[] = [
   {
     name: 'main-page',
-    component: () => new MainPage().element,
+    component: () => new MainPage(hearder.changeLinkStyle).element,
   },
   {
     name: 'toys-page',
-    component: () => new ToysPage().element,
+    component: () => new ToysPage(hearder.changeCount).element,
   },
   {
     name: 'tree-page',

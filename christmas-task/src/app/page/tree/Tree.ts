@@ -21,14 +21,14 @@ import GarlandTree from './GarlandTree/GarlandTree';
 class TreePage extends BaseElement {
   audioSnowflaks: HTMLElement;
   playSound: HTMLElement;
-  snowflakes: HTMLElement | undefined;
+  snowflakes: Snowflakes;
   chooseTree: HTMLElement;
   chooseBackground: HTMLElement;
   chooseGarland: HTMLElement;
   garlandButtonsContainer: HTMLElement;
   toggleGarland: HTMLElement | undefined;
   treeToysContainer: HTMLElement;
-  favotiteToysData: IToyCardData[];
+  favotiteToysData: IToyCardData[] = [];
   mainTreeContainer: HTMLElement;
   mainTree: HTMLElement;
   snowflakesContainer: HTMLElement;
@@ -40,11 +40,12 @@ class TreePage extends BaseElement {
   dragX = 0;
   dragY = 0;
   snowflaksButton: HTMLElement;
+  tree: MainTree;
 
   constructor() {
     super('main', ['main']);
-    this.favotiteToysData = [];
     this.getFavoriteToy();
+
     this.element.innerHTML = `
       <div class="blur">
         <div class="tree container">
@@ -96,6 +97,10 @@ class TreePage extends BaseElement {
     this.garlandTreeContainer = this.element.querySelector('.tree__garland')!;
     this.snowflakesContainer = this.element.querySelector('.tree__snowflakes')!;
 
+    this.tree = new MainTree(this.getCoordinatesForToy.bind(this));
+
+    this.snowflakes = new Snowflakes(50);
+
     this.playSound = new PlaySound().render(this.audioSnowflaks);
     this.snowflaksButton = new SnowflakeButton(
       this.onOffSnow.bind(this)
@@ -119,7 +124,10 @@ class TreePage extends BaseElement {
       this.isChecked,
       this.garlandOnOff.bind(this)
     ).render(this.chooseGarland);
-    // this.snowflakes = new Snowflakes(50).render(this.snowflakesContainer);
+
+    this.snowflakes.render(this.snowflakesContainer);
+    this.mainTree.append(this.tree.element);
+
     this.favotiteToysData.forEach((item) => {
       new FavoriteToy(item, this.setCoordinatesForToy.bind(this)).render(
         this.treeToysContainer
@@ -127,7 +135,6 @@ class TreePage extends BaseElement {
     });
 
     this.changeBackgroundUrl('public/bg/1.jpg');
-    this.changeTreeSrc('public/tree/1.png');
     this.onOffSnow('');
   }
 
@@ -152,10 +159,7 @@ class TreePage extends BaseElement {
   }
 
   onOffSnow(className: string) {
-    this.snowflakesContainer.innerHTML = '';
-    this.snowflakes = new Snowflakes(50, className).render(
-      this.snowflakesContainer
-    );
+    this.snowflakes.setClassName(className);
   }
 
   changeBackgroundUrl(path: string) {
@@ -163,10 +167,7 @@ class TreePage extends BaseElement {
   }
 
   changeTreeSrc(src: string) {
-    this.mainTree.innerHTML = '';
-    this.mainTree.append(
-      new MainTree(this.getCoordinatesForToy.bind(this), src).element
-    );
+    this.tree.changeSrc(src);
   }
 
   garlandOn(color: string, flag: boolean) {

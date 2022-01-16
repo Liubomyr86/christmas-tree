@@ -38,14 +38,8 @@ class FavoriteFilter extends BaseElement {
 
   checkFavoriteToys() {
     this.lable.addEventListener('click', () => {
-      if (!(<HTMLInputElement>this.checkbox).checked) {
-        this.favoriteValue = !(<HTMLInputElement>this.checkbox).checked;
-        this.setFilters();
-      } else {
-        this.favoriteValue = !(<HTMLInputElement>this.checkbox).checked;
-
-        this.setFilters();
-      }
+      this.favoriteValue = !(<HTMLInputElement>this.checkbox).checked;
+      this.setFilters();
     });
   }
 

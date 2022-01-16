@@ -24,7 +24,7 @@ class ToysPage extends BaseElement {
   private sorting: Sorting;
   private resetButton: HTMLElement;
 
-  constructor() {
+  constructor(callback: () => void) {
     super('main', ['main']);
 
     this.filterData = this.getData();
@@ -58,7 +58,7 @@ class ToysPage extends BaseElement {
       'Reset filters'
     ).render(this.controls);
 
-    this.toyCards = data.map((item) => new ToyCard(item));
+    this.toyCards = data.map((item) => new ToyCard(item, callback));
     this.setValueFilters();
     this.resetFiltersValues();
   }
@@ -91,6 +91,10 @@ class ToysPage extends BaseElement {
       .forEach((item) => {
         this.cardsContainer.append(item.element);
       });
+
+    if (!this.cardsContainer.childNodes.length) {
+      this.cardsContainer.textContent = 'No matches found';
+    }
   }
 
   sortType(a: ToyCard, b: ToyCard): number {

@@ -9,16 +9,13 @@ class ToyCard extends BaseElement {
   image: HTMLElement;
   cardDescription: HTMLElement;
   ribbon: HTMLElement;
-  // favoriteArrPush: (elem: IToyCardData) => void;
-  // favoritArrPop: (elem: string) => void;
   count: number = 0;
+  changeCount: () => void;
 
-  constructor(public data: IToyCardData) {
+  constructor(public data: IToyCardData, callback: () => void) {
     super('div', ['toy-card']);
 
-    // this.favoriteArrPush = arrPush;
-    // this.favoritArrPop = arrPop;
-
+    this.changeCount = callback;
     this.element.dataset.num = data.num;
     this.title = new BaseElement('h2', ['toy-card__title'], data.name).render(
       this.element
@@ -50,6 +47,7 @@ class ToyCard extends BaseElement {
       if (this.ribbon.classList.contains('ribbon_checked')) {
         this.ribbon.classList.remove('ribbon_checked');
         state.arrayPop(this.element.dataset.num);
+        this.changeCount();
       } else {
         if (state.getArrayLength() >= 20) {
           alert('Sorry, все слоты заполнены');
@@ -57,6 +55,7 @@ class ToyCard extends BaseElement {
           this.count += 1;
           this.ribbon.classList.add('ribbon_checked');
           state.arrayPush(this.data);
+          this.changeCount();
         }
       }
     });

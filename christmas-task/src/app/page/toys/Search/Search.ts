@@ -16,6 +16,7 @@ class Search extends BaseElement {
   constructor(setData: () => void) {
     super('input', ['search']);
     this.element.setAttribute('type', 'search');
+    this.element.setAttribute('autofocus', 'autofocus');
     this.element.setAttribute('autocomplete', 'off');
     this.element.setAttribute('placeholder', 'Search toys by name...');
     this.element.id = 'search';

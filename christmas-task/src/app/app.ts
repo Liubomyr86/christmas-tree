@@ -6,15 +6,16 @@ import { Router } from './router/Router';
 
 class App {
   root: HTMLElement;
-  header: HTMLElement;
+  header: Header;
   main: HTMLElement;
   footer: HTMLElement;
   router: Router;
 
   constructor(rootElement: HTMLElement) {
     this.root = rootElement;
-    this.header = new Header().element;
-    this.main = new MainPage().element;
+    this.header = new Header();
+    this.header.element;
+    this.main = new MainPage(this.header.changeLinkStyle.bind(this)).element;
 
     this.router = new Router(() => {
       this.main.innerHTML = '';
@@ -25,7 +26,7 @@ class App {
   }
 
   start() {
-    this.root.append(this.header);
+    this.root.append(this.header.element);
     this.root.append(this.main!);
     this.root.append(this.footer);
   }
