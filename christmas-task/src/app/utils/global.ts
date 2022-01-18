@@ -2,8 +2,6 @@ import { IToyCardData } from './alias';
 
 class State {
   private favorite: IToyCardData[] = [];
-  private treeUrl: string = 'public/tree/1.png';
-  private snowflakesClass: string = '';
 
   arrayPush(item?: IToyCardData) {
     if (item) this.favorite.push(item);
@@ -24,9 +22,26 @@ class State {
     return this.favorite.length;
   }
 
-  getArrayItems(array: IToyCardData[]) {
-    return (array = this.favorite.slice());
+  getArrayItems() {
+    return this.favorite.slice();
   }
 }
 
+class StorageEvents {
+  setItemToLocalStorage(key: string, value: string) {
+    localStorage.setItem(key, value);
+  }
+  getItemFromLocalStorage(key: string) {
+    return localStorage.getItem(key);
+  }
+
+  clearLocalStorage() {
+    localStorage.clear();
+  }
+  getLocalStorageLength() {
+    return localStorage.length;
+  }
+}
+
+export const storage = new StorageEvents();
 export const state = new State();

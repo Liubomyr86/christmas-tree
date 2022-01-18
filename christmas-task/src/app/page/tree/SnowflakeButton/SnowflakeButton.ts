@@ -1,7 +1,7 @@
 import './_snowfalake-button.scss';
 
 import BaseElement from '../../../components/BaseElement';
-import { state } from '../../../utils/global';
+import { storage } from '../../../utils/global';
 
 class SnowflakeButton extends BaseElement {
   setClassName: (className: string) => void;
@@ -11,6 +11,7 @@ class SnowflakeButton extends BaseElement {
     super('span', ['snowflake']);
     this.setClassName = setClassName;
     this.onOffSnowflakes();
+    this.getSnowflakeCheckedFromLocaleStorage();
   }
 
   onOffSnowflakes() {
@@ -18,11 +19,22 @@ class SnowflakeButton extends BaseElement {
       if (!this.isChecked) {
         this.setClassName('snowflakes');
         this.isChecked = true;
+        storage.setItemToLocalStorage('ct-snowflake', 'snowflakes');
+        storage.setItemToLocalStorage('ct-snowflakeChecked', 'true');
       } else {
         this.setClassName('');
         this.isChecked = false;
+        storage.setItemToLocalStorage('ct-snowflake', '');
+        storage.setItemToLocalStorage('ct-snowflakeChecked', 'false');
       }
     });
+  }
+
+  getSnowflakeCheckedFromLocaleStorage() {
+    const check: boolean = JSON.parse(
+      storage.getItemFromLocalStorage('ct-snowflakeChecked')!
+    );
+    this.isChecked = check;
   }
 }
 

@@ -1,6 +1,7 @@
 import './_garland-tree.scss';
 
 import BaseElement from '../../../components/BaseElement';
+import { storage } from '../../../utils/global';
 
 class GarlandTree extends BaseElement {
   liItem: HTMLElement | undefined;
@@ -58,6 +59,8 @@ class GarlandTree extends BaseElement {
         this.liItem.style.transform = `translateY(${this.trnaslateY}px)`;
       }
     }
+
+    this.getGarlanSettingsFromLocalStorage();
   }
 
   swithGarland(color: string, flag: boolean) {
@@ -65,6 +68,16 @@ class GarlandTree extends BaseElement {
       this.element.className = `garland__lightrope ${color} visible`;
     } else {
       this.element.classList.remove('visible');
+    }
+  }
+
+  getGarlanSettingsFromLocalStorage() {
+    const flag: boolean = JSON.parse(
+      storage.getItemFromLocalStorage('ct-garlandToggle')!
+    );
+    const color = storage.getItemFromLocalStorage('ct-garlandColor');
+    if (flag) {
+      this.element.className = `garland__lightrope ${color} visible`;
     }
   }
 }

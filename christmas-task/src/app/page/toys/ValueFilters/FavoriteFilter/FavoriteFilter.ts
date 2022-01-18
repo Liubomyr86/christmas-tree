@@ -1,6 +1,7 @@
 import './_favorite-filter.scss';
 import BaseElement from '../../../../components/BaseElement';
 import Title from '../../../../components/Title';
+import { storage } from '../../../../utils/global';
 
 class FavoriteFilter extends BaseElement {
   checkboxContainer: HTMLElement;
@@ -34,18 +35,33 @@ class FavoriteFilter extends BaseElement {
     );
     this.lable.setAttribute('for', 'checkbox');
     this.checkFavoriteToys();
+    this.getFavoriteValueFromLocalStorage();
   }
 
   checkFavoriteToys() {
     this.lable.addEventListener('click', () => {
       this.favoriteValue = !(<HTMLInputElement>this.checkbox).checked;
       this.setFilters();
+      storage.setItemToLocalStorage(
+        'ct-favorite',
+        this.favoriteValue.toString()
+      );
     });
   }
 
   resetFavoritButton() {
     this.favoriteValue = false;
     (<HTMLInputElement>this.checkbox).checked = false;
+  }
+
+  getFavoriteValueFromLocalStorage() {
+    if (storage.getItemFromLocalStorage('ct-favorite')) {
+      const favoriteValue: boolean = JSON.parse(
+        storage.getItemFromLocalStorage('ct-favorite')!
+      );
+      this.favoriteValue = favoriteValue;
+      (<HTMLInputElement>this.checkbox).checked = favoriteValue;
+    }
   }
 }
 

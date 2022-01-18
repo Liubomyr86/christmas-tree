@@ -3,6 +3,7 @@ import './_sort.scss';
 import BaseElement from '../../../components/BaseElement';
 import Title from '../../../components/Title';
 import { selectData } from '../../../utils/selectData';
+import { storage } from '../../../utils/global';
 
 class Sorting extends BaseElement {
   select: HTMLElement;
@@ -32,6 +33,7 @@ class Sorting extends BaseElement {
       this.option.setAttribute('value', item.value);
     });
     this.sortType;
+    this.getSortValueFromLocalStorage();
     this.setSortType();
   }
 
@@ -63,7 +65,23 @@ class Sorting extends BaseElement {
         default:
           break;
       }
+      storage.setItemToLocalStorage('ct-sort', target.value);
     });
+  }
+
+  getSortValueFromLocalStorage() {
+    if (storage.getItemFromLocalStorage('ct-sort')) {
+      const localStorageSortValue = storage.getItemFromLocalStorage('ct-sort');
+
+      this.sortType = localStorageSortValue!;
+
+      const options: Element[] = Array.from(this.select.children);
+      for (let option of options) {
+        if ((<HTMLOptionElement>option).value === localStorageSortValue) {
+          (<HTMLOptionElement>option).selected = true;
+        }
+      }
+    }
   }
 }
 

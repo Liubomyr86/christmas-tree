@@ -2,7 +2,7 @@ import './_toy-card.scss';
 
 import BaseElement from '../../../components/BaseElement';
 import { IToyCardData } from '../../../utils/alias';
-import { state } from '../../../utils/global';
+import { state, storage } from '../../../utils/global';
 
 class ToyCard extends BaseElement {
   title: HTMLElement;
@@ -56,6 +56,10 @@ class ToyCard extends BaseElement {
           this.ribbon.classList.add('ribbon_checked');
           state.arrayPush(this.data);
           this.changeCount();
+          storage.setItemToLocalStorage(
+            'ct-favoriteToys',
+            JSON.stringify(state.getArrayItems())
+          );
         }
       }
     });

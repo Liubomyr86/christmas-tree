@@ -1,4 +1,5 @@
 @import '../../../../sass/abstracts/constants';
+@import '../../../../sass/abstracts/placeholders';
 
 .toy-card {
   display: flex;
@@ -14,6 +15,15 @@
   backdrop-filter: blur(6px);
   cursor: pointer;
   box-shadow: 0 0 10px rgba(150 150 150 /0.5);
+  @extend %transition;
+  &:hover {
+    background-color: rgb(31, 112, 127);
+    transform: scale(1.05);
+
+    & > .ribbon::after {
+      transform: scale(1.05);
+    }
+  }
 
   &__title {
     width: 100%;

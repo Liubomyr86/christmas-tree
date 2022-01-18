@@ -11,7 +11,7 @@ import { garlandButtonData } from '../../utils/garlandData';
 import GarlandButtons from './GarlandButtons/GarlandButtons';
 import GarlandToggle from './GarlandToggle/GarlandToggle';
 import { IToyCardData } from '../../utils/alias';
-import { state } from '../../utils/global';
+import { state, storage } from '../../utils/global';
 import data from '../../utils/data';
 import FavoriteToy from './TreeToy/FavoriteToy';
 import MainTree from './MainTree/MainTree';
@@ -104,7 +104,7 @@ class TreePage extends BaseElement {
 
     this.playSound = new PlaySound().render(this.audioSnowflaks);
     this.snowflaksButton = new SnowflakeButton(
-      this.onOffSnow.bind(this)
+      this.snowflakes.setClassName.bind(this.snowflakes)
     ).render(this.audioSnowflaks);
     treeData.forEach((item) =>
       new ChooseTree(item, this.changeTreeSrc.bind(this)).render(
@@ -137,16 +137,14 @@ class TreePage extends BaseElement {
     });
 
     this.changeBackgroundUrl('public/bg/1.jpg');
-    this.onOffSnow('');
+    this.getTreeBgFromLocalStorage();
   }
 
   getFavoriteToy() {
     if (state.getArrayLength() <= 0) {
       return (this.favotiteToysData = data.slice(0, 20));
     } else {
-      return (this.favotiteToysData = state.getArrayItems(
-        this.favotiteToysData
-      ));
+      return (this.favotiteToysData = state.getArrayItems());
     }
   }
 
@@ -158,10 +156,6 @@ class TreePage extends BaseElement {
   getCoordinatesForToy() {
     const coordinates = [this.dragX, this.dragY];
     return coordinates;
-  }
-
-  onOffSnow(className: string) {
-    this.snowflakes.setClassName(className);
   }
 
   changeBackgroundUrl(path: string) {
@@ -176,6 +170,13 @@ class TreePage extends BaseElement {
     this.garland.swithGarland(color, flag);
     this.toggleGarland.garlandColor = color;
     this.toggleGarland.toggleOn(flag);
+  }
+
+  getTreeBgFromLocalStorage() {
+    if (storage.getItemFromLocalStorage('ct-treeBg')) {
+      const bgPath = storage.getItemFromLocalStorage('ct-treeBg')!;
+      this.mainTreeContainer.style.backgroundImage = `url(${bgPath})`;
+    }
   }
 }
 

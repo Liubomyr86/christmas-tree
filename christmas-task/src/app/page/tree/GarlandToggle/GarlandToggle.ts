@@ -1,6 +1,7 @@
 import './_garland-toggle.scss';
 
 import BaseElement from '../../../components/BaseElement';
+import { storage } from '../../../utils/global';
 
 class GarlandToggle extends BaseElement {
   input: HTMLInputElement;
@@ -19,6 +20,7 @@ class GarlandToggle extends BaseElement {
     `;
     this.input = this.element.querySelector('.toggle')!;
     this.changeToggle();
+    this.getTogglCheckedFromLocalStorage();
   }
 
   toggleOn(flag: boolean) {
@@ -28,7 +30,20 @@ class GarlandToggle extends BaseElement {
   changeToggle() {
     this.element.addEventListener('click', () => {
       this.visibilityGarland(this.garlandColor, this.input.checked);
+      storage.setItemToLocalStorage(
+        'ct-garlandToggle',
+        this.input.checked.toString()
+      );
     });
+  }
+
+  getTogglCheckedFromLocalStorage() {
+    const flag: boolean = JSON.parse(
+      storage.getItemFromLocalStorage('ct-garlandToggle')!
+    );
+    const color = storage.getItemFromLocalStorage('ct-garlandColor');
+    this.input.checked = flag;
+    this.garlandColor = color!;
   }
 }
 

@@ -1,5 +1,3 @@
-import './_value-filters.scss';
-
 import BaseElement from '../../../components/BaseElement';
 import Title from '../../../components/Title';
 import { IFilterData } from '../../../utils/alias';
@@ -7,6 +5,7 @@ import data from '../../../utils/data';
 import ShapeFilter from './ShapeFilter/ShapeFilter';
 import ColorFilter from './ColorFilter/ColorFilter';
 import SizeFilter from './SizeFilter/SizeFilter';
+import { storage } from '../../../utils/global';
 
 class ValueFilters extends BaseElement {
   data: IFilterData;
@@ -16,6 +15,7 @@ class ValueFilters extends BaseElement {
   colorContainer: HTMLElement;
   sizeContainer: HTMLElement;
   filter: () => void;
+  value: string = '';
 
   private selectedShapes = new Set<string>();
   private selectedColors = new Set<string>();
@@ -75,6 +75,7 @@ class ValueFilters extends BaseElement {
     this.sizeContainer = new SizeFilter(this.data.size).render(this.element);
 
     this.selectFilters();
+    this.getFilterValuesFromLocalStorage();
   }
 
   getToysData() {
@@ -100,12 +101,17 @@ class ValueFilters extends BaseElement {
         switch (filterCategory) {
           case 'shape':
             this.removeSelectedFilterValue(this.selectedShapes, filterName);
+            this.value = JSON.stringify([...this.selectedShapes]);
             break;
           case 'color':
             this.removeSelectedFilterValue(this.selectedColors, filterName);
+            this.value = JSON.stringify([...this.selectedColors]);
+
             break;
           case 'size':
             this.removeSelectedFilterValue(this.selectedSize, filterName);
+            this.value = JSON.stringify([...this.selectedSize]);
+
             break;
           default:
             break;
@@ -116,18 +122,26 @@ class ValueFilters extends BaseElement {
         switch (filterCategory) {
           case 'shape':
             this.addSelectedFilterValue(this.selectedShapes, filterName);
+            this.value = JSON.stringify([...this.selectedShapes]);
+
             break;
           case 'color':
             this.addSelectedFilterValue(this.selectedColors, filterName);
+            this.value = JSON.stringify([...this.selectedColors]);
+
             break;
           case 'size':
             this.addSelectedFilterValue(this.selectedSize, filterName);
+            this.value = JSON.stringify([...this.selectedSize]);
+
             break;
           default:
             break;
         }
+
         this.filter();
       }
+      storage.setItemToLocalStorage(`ct-${filterCategory}`, this.value);
     });
   }
 
@@ -137,6 +151,53 @@ class ValueFilters extends BaseElement {
 
   removeSelectedFilterValue(filterSet: Set<string>, name: string) {
     filterSet.delete(name);
+  }
+
+  getFilterValuesFromLocalStorage() {
+    if (storage.getItemFromLocalStorage('ct-shape')) {
+      const filtersName = JSON.parse(
+        storage.getItemFromLocalStorage('ct-shape')!
+      );
+      const shapes: Element[] = Array.from(this.shapeContainer.children);
+      for (let name of filtersName) {
+        this.addSelectedFilterValue(this.selectedShapes, name);
+        for (let shape of shapes) {
+          if (shape.className.includes(`shape__button_${name}`)) {
+            shape.classList.add('shape__button_active');
+          }
+        }
+      }
+    }
+    if (storage.getItemFromLocalStorage('ct-color')) {
+      const filtersName = JSON.parse(
+        storage.getItemFromLocalStorage('ct-color')!
+      );
+      const colors: Element[] = Array.from(this.colorContainer.children);
+
+      for (let name of filtersName) {
+        this.addSelectedFilterValue(this.selectedColors, name);
+        for (let color of colors) {
+          if (color.className.includes(`color__button_${name}`)) {
+            color.classList.add('color__button_active');
+          }
+        }
+      }
+    }
+    if (storage.getItemFromLocalStorage('ct-size')) {
+      const filtersName = JSON.parse(
+        storage.getItemFromLocalStorage('ct-size')!
+      );
+      const sizes: Element[] = Array.from(this.sizeContainer.children);
+
+      for (let name of filtersName) {
+        this.addSelectedFilterValue(this.selectedSize, name);
+        for (let size of sizes) {
+          if (size.className.includes(`size__button_${name}`)) {
+            size.classList.add('size__button_active');
+          }
+        }
+      }
+    }
   }
 }
 

@@ -1,6 +1,7 @@
 import './_main-tree.scss';
 
 import BaseElement from '../../../components/BaseElement';
+import { storage } from '../../../utils/global';
 
 class MainTree extends BaseElement {
   mapArea: HTMLElement;
@@ -23,6 +24,7 @@ class MainTree extends BaseElement {
     this.mapArea = this.element.querySelector('[name="tree-map"]')!;
     this.handleOverDrop();
     this.handleDrop();
+    this.getTreeSrcFromLocalStorage();
   }
 
   overDrop(event: DragEvent) {
@@ -54,6 +56,13 @@ class MainTree extends BaseElement {
 
   changeSrc(src: string) {
     this.imageTree.src = src;
+  }
+
+  getTreeSrcFromLocalStorage() {
+    if (storage.getItemFromLocalStorage('ct-treeImg')) {
+      const treePath = storage.getItemFromLocalStorage('ct-treeImg');
+      this.imageTree.src = treePath!;
+    }
   }
 }
 

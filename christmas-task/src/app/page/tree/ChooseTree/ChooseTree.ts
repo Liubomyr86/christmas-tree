@@ -1,5 +1,6 @@
 import './_choose-tree.scss';
 import BaseElement from '../../../components/BaseElement';
+import { storage } from '../../../utils/global';
 
 class ChooseTree extends BaseElement {
   setImaeSrc: (path: string) => void;
@@ -14,6 +15,7 @@ class ChooseTree extends BaseElement {
   getPath(path: string) {
     this.element.addEventListener('click', () => {
       this.setImaeSrc(path);
+      storage.setItemToLocalStorage('ct-treeImg', path);
     });
   }
 }

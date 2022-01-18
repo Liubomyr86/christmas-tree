@@ -1,5 +1,6 @@
 import './_search.scss';
 import BaseElement from '../../../components/BaseElement';
+import { storage } from '../../../utils/global';
 
 class Search extends BaseElement {
   setData: () => void;
@@ -21,6 +22,8 @@ class Search extends BaseElement {
     this.element.setAttribute('placeholder', 'Search toys by name...');
     this.element.id = 'search';
     this.setData = setData;
+    this.getSearchValueFromLocalStorage();
+
     this.searchCard();
   }
 
@@ -30,7 +33,17 @@ class Search extends BaseElement {
         .toLowerCase()
         .trim();
       this.setData();
+      storage.setItemToLocalStorage('ct-search', this.searchValue);
     });
+  }
+
+  getSearchValueFromLocalStorage() {
+    if (storage.getItemFromLocalStorage('ct-search')) {
+      const localStorageSearchValue =
+        storage.getItemFromLocalStorage('ct-search');
+      this.searchValue = localStorageSearchValue!;
+      (<HTMLInputElement>this.element).value = localStorageSearchValue!;
+    }
   }
 }
 

@@ -9,6 +9,7 @@ import Sorting from './Sort/Sorting';
 import ToyCard from './ToyCard/ToyCard';
 import { IToyCardData } from '../../utils/alias';
 import FavoriteFilter from './ValueFilters/FavoriteFilter/FavoriteFilter';
+import { storage } from '../../utils/global';
 
 class ToysPage extends BaseElement {
   filterData: (IToyCardData | undefined)[];
@@ -139,6 +140,9 @@ class ToysPage extends BaseElement {
 
   resetFiltersValues() {
     this.resetButton.addEventListener('click', () => {
+      const sortType = this.sorting.checkSortType();
+      storage.clearLocalStorage();
+      storage.setItemToLocalStorage('ct-sort', sortType);
       this.cardsContainer.innerHTML = '';
       this.searchElement.resetSearchValue();
       this.valueFilters.clearSet();

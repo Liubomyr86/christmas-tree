@@ -4,6 +4,7 @@ import './_range-filters.scss';
 import noUiSlider, { target } from 'nouislider';
 import BaseElement from '../../../components/BaseElement';
 import Title from '../../../components/Title';
+import { storage } from '../../../utils/global';
 
 class RangeFilters extends BaseElement {
   title: HTMLElement;
@@ -93,6 +94,10 @@ class RangeFilters extends BaseElement {
 
     this.countSlider();
     this.yearSlider();
+
+    this.setRangeCountValuesFromLocalStorage();
+    this.setRangeYearValuesFromLocalStorage();
+
     this.readCountValue(this.countValues, this.filter);
     this.readYearValue(this.yearValues, this.filter);
   }
@@ -153,6 +158,7 @@ class RangeFilters extends BaseElement {
         callback();
         values = [min, max];
         skipValues[handle].innerHTML = values[handle].toString();
+        storage.setItemToLocalStorage('ct-rangeCount', JSON.stringify(values));
       }
     );
   }
@@ -169,8 +175,23 @@ class RangeFilters extends BaseElement {
         callback();
         values = [min, max];
         skipValues[handle].innerHTML = values[handle].toString();
+        storage.setItemToLocalStorage('ct-rangeYear', JSON.stringify(values));
       }
     );
+  }
+
+  setRangeCountValuesFromLocalStorage() {
+    const rangeCountValues = JSON.parse(
+      storage.getItemFromLocalStorage('ct-rangeCount')!
+    );
+    (<target>this.countSliderElement).noUiSlider!.set(rangeCountValues);
+  }
+
+  setRangeYearValuesFromLocalStorage() {
+    const rangeYearValues = JSON.parse(
+      storage.getItemFromLocalStorage('ct-rangeYear')!
+    );
+    (<target>this.yearSliderElement).noUiSlider!.set(rangeYearValues);
   }
 }
 
