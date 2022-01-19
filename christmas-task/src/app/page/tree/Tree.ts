@@ -20,7 +20,7 @@ import GarlandTree from './GarlandTree/GarlandTree';
 
 class TreePage extends BaseElement {
   audioSnowflaks: HTMLElement;
-  playSound: HTMLElement;
+  playSound: PlaySound;
   snowflakes: Snowflakes;
   chooseTree: HTMLElement;
   chooseBackground: HTMLElement;
@@ -44,38 +44,36 @@ class TreePage extends BaseElement {
   garland: GarlandTree;
 
   constructor() {
-    super('main', ['main']);
+    super('div', ['blur']);
     this.getFavoriteToy();
 
     this.element.innerHTML = `
-      <div class="blur">
-        <div class="tree container">
-          <div class="tree__settings">
-            <div class="tree__audio-snowflaks"></div>
-            <div class="tree__choose-tree">
-              <h2 class="tree__title">Choose tree</h2>
-              <div class="tree__items-container"></div>
-            </div>
-            <div class="tree__choose-background">
-              <h2 class="tree__title">Choose background</h2>
-              <div class="tree__items-bg-container"></div>
-            </div>
-            <div class="tree__choose-garland">
-              <h2 class="tree__title">Garland</h2>
-              <div class="tree__garland-container">
-                <div class="tree__garland-buttons"></div>
-              </div>
+      <div class="tree container">
+        <div class="tree__settings">
+          <div class="tree__audio-snowflaks"></div>
+          <div class="tree__choose-tree">
+            <h2 class="tree__title">Choose tree</h2>
+            <div class="tree__items-container"></div>
+          </div>
+          <div class="tree__choose-background">
+            <h2 class="tree__title">Choose background</h2>
+            <div class="tree__items-bg-container"></div>
+          </div>
+          <div class="tree__choose-garland">
+            <h2 class="tree__title">Garland</h2>
+            <div class="tree__garland-container">
+              <div class="tree__garland-buttons"></div>
             </div>
           </div>
-          <div class="tree__container">
-            <div class="tree__snowflakes"></div>
-            <div class="tree__garland garland"></div>
-            <div class="tree__main-tree"></div>
-          </div>
-          <div class="tree__toys">
-            <h2 class="tree__title">Toys</h2>
-            <div class="tree__toys-container"></div>
-          </div>
+        </div>
+        <div class="tree__container">
+          <div class="tree__snowflakes"></div>
+          <div class="tree__garland garland"></div>
+          <div class="tree__main-tree"></div>
+        </div>
+        <div class="tree__toys">
+          <h2 class="tree__title">Toys</h2>
+          <div class="tree__toys-container"></div>
         </div>
       </div>
     `;
@@ -102,7 +100,8 @@ class TreePage extends BaseElement {
     this.garland = new GarlandTree();
     this.tree = new MainTree(this.getCoordinatesForToy.bind(this));
 
-    this.playSound = new PlaySound().render(this.audioSnowflaks);
+    this.playSound = new PlaySound();
+    this.playSound.render(this.audioSnowflaks);
     this.snowflaksButton = new SnowflakeButton(
       this.snowflakes.setClassName.bind(this.snowflakes)
     ).render(this.audioSnowflaks);
@@ -177,6 +176,10 @@ class TreePage extends BaseElement {
       const bgPath = storage.getItemFromLocalStorage('ct-treeBg')!;
       this.mainTreeContainer.style.backgroundImage = `url(${bgPath})`;
     }
+  }
+
+  cleanUp(): void {
+    this.playSound.stopPlay();
   }
 }
 

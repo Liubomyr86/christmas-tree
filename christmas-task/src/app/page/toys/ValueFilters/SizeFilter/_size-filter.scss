@@ -10,11 +10,11 @@
     margin: 5px 5px;
     border: 0;
     outline: 0;
-    -webkit-mask-image: url('../../../../../assets/svg/ball.svg');
+    mask-image: url('../../../../../assets/svg/ball.svg');
     background-repeat: no-repeat;
     background-position: center center;
     cursor: pointer;
-    -webkit-mask-size: cover;
+    mask-size: cover;
     @extend %transition;
 
     &_active {

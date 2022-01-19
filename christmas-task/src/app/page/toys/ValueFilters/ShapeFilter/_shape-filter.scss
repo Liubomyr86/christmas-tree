@@ -17,7 +17,7 @@
     background-repeat: no-repeat;
     background-position: center center;
     cursor: pointer;
-    -webkit-mask-size: cover;
+    mask-size: cover;
     @extend %transition;
 
     &_active {
@@ -30,22 +30,22 @@
 
     &_ball {
       margin-left: 20px;
-      -webkit-mask-image: url('../../../../../assets/svg/ball.svg');
+      mask-image: url('../../../../../assets/svg/ball.svg');
     }
 
     &_figurine {
-      -webkit-mask-image: url('../../../../../assets/svg/toy.svg');
+      mask-image: url('../../../../../assets/svg/toy.svg');
     }
 
     &_bell {
-      -webkit-mask-image: url('../../../../../assets/svg/bell.svg');
+      mask-image: url('../../../../../assets/svg/bell.svg');
     }
 
     &_cone {
-      -webkit-mask-image: url('../../../../../assets/svg/cone.svg');
+      mask-image: url('../../../../../assets/svg/cone.svg');
     }
     &_snowflake {
-      -webkit-mask-image: url('../../../../../assets/svg/snowflake.svg');
+      mask-image: url('../../../../../assets/svg/snowflake.svg');
     }
   }
 }

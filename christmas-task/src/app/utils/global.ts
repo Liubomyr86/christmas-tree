@@ -3,6 +3,9 @@ import { IToyCardData } from './alias';
 class State {
   private favorite: IToyCardData[] = [];
 
+  constructor() {
+    this.getArrayFromLocalStorage();
+  }
   arrayPush(item?: IToyCardData) {
     if (item) this.favorite.push(item);
   }
@@ -20,6 +23,15 @@ class State {
 
   getArrayLength() {
     return this.favorite.length;
+  }
+
+  getArrayFromLocalStorage() {
+    console.log(this.favorite);
+    if (!this.favorite.length) {
+      if (localStorage.getItem('ct-favoriteToys'))
+        this.favorite = JSON.parse(localStorage.getItem('ct-favoriteToys')!);
+    }
+    console.log(this.favorite);
   }
 
   getArrayItems() {

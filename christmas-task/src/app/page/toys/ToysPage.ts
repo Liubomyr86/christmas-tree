@@ -9,7 +9,7 @@ import Sorting from './Sort/Sorting';
 import ToyCard from './ToyCard/ToyCard';
 import { IToyCardData } from '../../utils/alias';
 import FavoriteFilter from './ValueFilters/FavoriteFilter/FavoriteFilter';
-import { storage } from '../../utils/global';
+import { state, storage } from '../../utils/global';
 
 class ToysPage extends BaseElement {
   filterData: (IToyCardData | undefined)[];
@@ -26,15 +26,13 @@ class ToysPage extends BaseElement {
   private resetButton: HTMLElement;
 
   constructor(callback: () => void) {
-    super('main', ['main']);
+    super('div', ['blur']);
 
     this.filterData = this.getData();
     this.element.innerHTML = `
-      <div class="blur">
-        <div class="toys container">
-          <div class="toys__controls controls"></div>
-          <div class="toys__cards-container"></div>
-        </div>
+      <div class="toys container">
+        <div class="toys__controls controls"></div>
+        <div class="toys__cards-container"></div>
       </div>
     `;
 
@@ -90,6 +88,12 @@ class ToysPage extends BaseElement {
       })
       .sort(this.sortType.bind(this))
       .forEach((item) => {
+        const favoriteCards = state.getArrayItems();
+        favoriteCards.forEach((card) => {
+          if (card.num === item.data.num) {
+            item.ribbon.classList.add('ribbon_checked');
+          }
+        });
         this.cardsContainer.append(item.element);
       });
 

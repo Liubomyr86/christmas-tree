@@ -48,6 +48,10 @@ class ToyCard extends BaseElement {
         this.ribbon.classList.remove('ribbon_checked');
         state.arrayPop(this.element.dataset.num);
         this.changeCount();
+        storage.setItemToLocalStorage(
+          'ct-favoriteToys',
+          JSON.stringify(state.getArrayItems())
+        );
       } else {
         if (state.getArrayLength() >= 20) {
           alert('Sorry, все слоты заполнены');

@@ -19,6 +19,7 @@ class PlaySound extends BaseElement {
       if (!this.isPlay) {
         this.audio.play();
         this.audio.loop = true;
+
         this.isPlay = true;
         this.element.classList.toggle('play-sound_active');
       } else {
@@ -36,13 +37,38 @@ class PlaySound extends BaseElement {
       storage.getItemFromLocalStorage('ct-isPlay')!
     );
     if (flag) {
-      this.audio.play();
+      const promise = this.audio.play();
+      if (promise !== undefined) {
+        promise
+          .then((_) => {
+            this.audio.autoplay;
+          })
+          .catch((error) => {
+            document.addEventListener(
+              'click',
+              () => {
+                this.audio.play();
+              },
+              {
+                once: true,
+              }
+            );
+          });
+      }
       this.isPlay = flag;
+
       this.element.classList.toggle('play-sound_active');
     } else {
       this.audio.currentTime = 0;
       this.isPlay = false;
     }
+  }
+
+  stopPlay() {
+    this.audio.pause();
+    this.audio.currentTime = 0;
+    this.isPlay = false;
+    storage.setItemToLocalStorage('ct-isPlay', this.isPlay.toString());
   }
 }
 

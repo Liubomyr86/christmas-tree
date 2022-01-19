@@ -7,6 +7,8 @@ class BaseElement {
     if (text) this.element.textContent = text;
   }
 
+  cleanUp() {}
+
   render(elem: HTMLElement): HTMLElement {
     return elem.appendChild(this.element);
   }
