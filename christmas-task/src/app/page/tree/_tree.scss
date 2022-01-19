@@ -1,11 +1,32 @@
+@import '../../../sass/abstracts/placeholders';
+
 .tree {
   display: flex;
 
   &__settings {
     display: flex;
     flex-direction: column;
-    width: 400px;
-    padding-top: 25px;
+    width: 25%;
+    padding: 25px 25px 25px 0;
+    transition: transform 0.3s;
+
+    @media (max-width: 1150px) {
+      position: absolute;
+      transform: translateX(-100%);
+    }
+
+    &_open {
+      z-index: 90;
+      display: flex;
+      width: 350px;
+      height: calc(100vh - 140px);
+      border: 1px solid var(--color-border);
+      background-color: var(--color-background-container);
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 0 10px rgb(150 150 150 / 50%);
+      transform: translateX(0);
+    }
   }
 
   &__audio-snowflaks {
@@ -38,6 +59,10 @@
     display: flex;
     align-items: center;
     column-gap: 30px;
+
+    @media (max-width: 1368px) {
+      column-gap: 15px;
+    }
   }
 
   &__garland-buttons {
@@ -46,6 +71,10 @@
     align-items: center;
     width: 250px;
     padding: 10px;
+
+    @media (max-width: 1368px) {
+      width: 200px;
+    }
   }
 
   &__container {
@@ -57,9 +86,13 @@
     background-position: center;
     height: calc(100vh - 140px);
     min-height: 750px;
-    width: 800px;
+    width: 50%;
     padding-bottom: 20px;
     overflow: hidden;
+
+    @media (max-width: 1368px) {
+      width: 75%;
+    }
   }
 
   &__main-tree {
@@ -70,9 +103,8 @@
   &__toys {
     display: flex;
     flex-direction: column;
-    width: 400px;
-    padding-top: 25px;
-    padding-left: 25px;
+    width: 25%;
+    padding: 25px 0 25px 25px;
   }
   &__toys-container {
     display: flex;

@@ -17,8 +17,12 @@ import FavoriteToy from './TreeToy/FavoriteToy';
 import MainTree from './MainTree/MainTree';
 import Snowflakes from './Snowflakes/Snowflakes';
 import GarlandTree from './GarlandTree/GarlandTree';
+import Hamburger from './Hamburger/Hamburger';
 
 class TreePage extends BaseElement {
+  hamburgerContainer: HTMLElement;
+  hamburger: Hamburger;
+  treeSettings: HTMLElement;
   audioSnowflaks: HTMLElement;
   playSound: PlaySound;
   snowflakes: Snowflakes;
@@ -49,6 +53,7 @@ class TreePage extends BaseElement {
 
     this.element.innerHTML = `
       <div class="tree container">
+        <span class="hamburger"></span>
         <div class="tree__settings">
           <div class="tree__audio-snowflaks"></div>
           <div class="tree__choose-tree">
@@ -77,6 +82,9 @@ class TreePage extends BaseElement {
         </div>
       </div>
     `;
+
+    this.hamburgerContainer = this.element.querySelector('.hamburger')!;
+    this.treeSettings = this.element.querySelector('.tree__settings')!;
     this.audioSnowflaks = this.element.querySelector('.tree__audio-snowflaks')!;
     this.chooseTree = this.element.querySelector('.tree__items-container')!;
     this.chooseBackground = this.element.querySelector(
@@ -99,6 +107,9 @@ class TreePage extends BaseElement {
     this.snowflakes = new Snowflakes(50);
     this.garland = new GarlandTree();
     this.tree = new MainTree(this.getCoordinatesForToy.bind(this));
+
+    this.hamburger = new Hamburger(this.treeSettings);
+    this.hamburger.render(this.hamburgerContainer);
 
     this.playSound = new PlaySound();
     this.playSound.render(this.audioSnowflaks);

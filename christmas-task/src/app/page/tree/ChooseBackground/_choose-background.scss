@@ -8,4 +8,9 @@
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
+
+  @media (max-width: 1368px) {
+    width: 55px;
+    height: 55px;
+  }
 }

@@ -1,0 +1,73 @@
+@import '../../../../sass/abstracts/placeholders';
+
+%hamburger-line {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  background: var(--color-white);
+  border-radius: 5px;
+  height: 2px;
+  width: 100%;
+  @extend %transition;
+}
+
+.hamburger {
+  z-index: 100;
+  display: none;
+  position: absolute;
+  width: 30px;
+  height: 16px;
+  top: 10px;
+  left: 25px;
+  transition: left 0.3s;
+
+  @media (max-width: 1150px) {
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  &.open {
+    left: 305px;
+  }
+}
+
+.hamburger-button {
+  display: inline-block;
+  position: relative;
+  width: 32px;
+  height: 18px;
+
+  &.open {
+    height: 26px;
+  }
+
+  &.open .hamburger-button__line {
+    opacity: 0;
+  }
+
+  &.open::before {
+    transform: translateY(11px) rotate(45deg);
+  }
+
+  &.open::after {
+    transform: translateY(-12px) rotate(-45deg);
+  }
+
+  &::before {
+    @extend %hamburger-line;
+    top: 0;
+    left: 0;
+  }
+
+  &::after {
+    @extend %hamburger-line;
+    bottom: 0;
+    left: 0;
+  }
+}
+
+.hamburger-button__line {
+  @extend %hamburger-line;
+  top: calc(50% - 1px);
+  left: 0;
+}
